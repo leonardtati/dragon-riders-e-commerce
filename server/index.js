@@ -66,6 +66,33 @@ express()
 
     res.status(200).send({ products: productsByCountry });
   })
+  .get("/countries/:country/featuredproducts", (req, res) => {
+    const { country } = req.params;
+    const companiesIdByCountry = companyData
+      .map((company) => {
+        if (
+          company.country.replace(" ", "").toLowerCase() ===
+          country.toLowerCase()
+        ) {
+          return company.id;
+        }
+      })
+      .filter((id) => id !== undefined);
+    const productsByCountry = companiesIdByCountry.map((id) => {
+      return productData.find((product) => {
+        return product.companyId === id;
+      });
+    });
+
+    const lowestPrices = productsByCountry.filter((product) => {
+      if (product.numInStock > 0) {
+        let newPrice = product.price.slice(1);
+        return parseFloat(newPrice) < 20;
+      }
+    });
+    res.status(200).send({ features: lowestPrices });
+  })
+
   .get("/categories/:country", (req, res) => {
     const { country } = req.params;
     const companiesIdByCountry = companyData
@@ -90,5 +117,4 @@ express()
       .status(200)
       .send({ categories: Array.from(new Set(productsByCategories)) });
   })
-
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
