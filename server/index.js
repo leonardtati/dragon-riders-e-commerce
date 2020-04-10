@@ -58,13 +58,37 @@ express()
         }
       })
       .filter((id) => id !== undefined);
-
     const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
+      return productData.find((product) => {
         return product.companyId === id;
       });
     });
 
     res.status(200).send({ products: productsByCountry });
   })
+  .get("/categories/:country", (req, res) => {
+    const { country } = req.params;
+    const companiesIdByCountry = companyData
+      .map((company) => {
+        if (
+          company.country.replace(" ", "").toLowerCase() ===
+          country.toLowerCase()
+        ) {
+          return company.id;
+        }
+      })
+      .filter((id) => id !== undefined);
+    const productsByCountry = companiesIdByCountry.map((id) => {
+      return productData.find((product) => {
+        return product.companyId === id;
+      });
+    });
+    const productsByCategories = productsByCountry.map((product) => {
+      return product.category;
+    });
+    res
+      .status(200)
+      .send({ categories: Array.from(new Set(productsByCategories)) });
+  })
+
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
