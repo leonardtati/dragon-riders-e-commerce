@@ -11,7 +11,7 @@ function Home() {
         <>
             <Intro>
                 <p>
-                    Weary Sweaty sells the finest wearable equipment to help you stay healthy.
+                    HELLO !!!!!! Weary Sweaty sells the finest wearable equipment to help you stay healthy.
                 </p>
                 {/* <Paragraph>
                     <strong>Browse items:</strong>
