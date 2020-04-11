@@ -24,7 +24,10 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
 
-  // REST endpoints?
+  // REST endpoints
+
+  //---Gets Country List in an Array---//
+
   .get("/countries", (req, res) => {
     const countryList = companyData.map((country) => {
       return country.country;
@@ -46,6 +49,8 @@ express()
     res.status(200).send({ companies: companiesByCountry });
   })
 
+  //----Gets the Products by each country----//
+
   .get("/products/:country", (req, res) => {
     const { country } = req.params;
     const companiesIdByCountry = companyData
@@ -66,6 +71,9 @@ express()
 
     res.status(200).send({ products: productsByCountry });
   })
+
+  //---A countries Featured Products, Sorted By Lowest Price---//
+
   .get("/countries/:country/featuredproducts", (req, res) => {
     const { country } = req.params;
     const companiesIdByCountry = companyData
@@ -93,6 +101,22 @@ express()
     res.status(200).send({ features: lowestPrices });
   })
 
+  //Order-Form Validation
+
+  .post("/order", (req, res) => {
+    const { order_summary } = req.body;
+    const updateOrder = order_summary.map((item) => {
+      return productData
+        .filter((product) => product.id === item.item_id)
+        .map((orderItem) => {
+          orderItem.numInStock -= item.quantity;
+        });
+    });
+    res.send({ status: "success" });
+  })
+
+  //---Gets Categories, Organized by Country---//
+
   .get("/categories/:country", (req, res) => {
     const { country } = req.params;
     const companiesIdByCountry = companyData
@@ -117,4 +141,5 @@ express()
       .status(200)
       .send({ categories: Array.from(new Set(productsByCategories)) });
   })
+
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
