@@ -8,7 +8,11 @@ import {
 
 import Header from '../Header/Header';
 // import About from './About';
-import Home from '../Home/Home';
+import LandingPage from '../LandingPage/LandingPage';
+import MainPage from '../MainPage/MainPage';
+import CategoryPage from '../CategoryPage/CategoryPage';
+import ProductPage from '../ProductPage/ProductPage';
+import ErrorPage from '../ErrorPage/ErrorPage';
 // import ItemDetails from './ItemDetails';
 import GlobalStyles from '../GlobalStyles/GlobalStyles';
 import styled from 'styled-components';
@@ -24,20 +28,20 @@ function App() {
         <Main>
           <Switch>
             <Route exact path="/">
-              <Home />
+              <LandingPage />
             </Route>
-            {/* <Route path="/about">
-              <About />
+            <Route path="/companies/:country">
+              <MainPage />
             </Route>
-            <Route path="/items/:itemId">
-              <ItemDetails />
+            <Route path="/categories/:country">
+              <CategoryPage />
             </Route>
-            <Route path="/sellers">
-              <Sellers />
+            <Route path="/products/:country">
+              <ProductPage />
             </Route>
-            <Route path="/sellers/:sellerId">
-              <ItemDetailsSeller />
-            </Route> */}
+            <Route path="/error">
+              <ErrorPage />
+            </Route>
           </Switch>
         </Main>
       </Wrapper>
