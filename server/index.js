@@ -106,13 +106,22 @@ express()
   .post("/order", (req, res) => {
     const { order_summary } = req.body;
     const updateOrder = order_summary.map((item) => {
+      if (!item.item_id || !item.quantity) {
+        res
+          .status(400)
+          .send({ message: "Item Id and/or Quantaties Missing :(" });
+      }
       return productData
         .filter((product) => product.id === item.item_id)
         .map((orderItem) => {
-          orderItem.numInStock -= item.quantity;
+          if (orderItem.numInStock - item.quantity > 0) {
+            orderItem.numInStock -= item.quantity;
+            res.status(200).send({
+              message: "Successful Purchase!",
+            });
+          }
         });
     });
-    res.send({ status: "success" });
   })
 
   //---Gets Categories, Organized by Country---//
