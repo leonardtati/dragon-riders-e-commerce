@@ -9,17 +9,18 @@ import DragonIcon from '../Header/DragonIcon';
 const Header = () => {
   return (
     <Wrapper>
-      <Title>Dragon Riders</Title>
       <CartIcon />
       <DragonIcon />
-      <nav>
-        <NavigationList>
-          <p>
-            <NavigationLink exact activeClassName="active" to="/">
-              Home
+
+      <Title>Welcome To Dragon Riders</Title>
+
+      <NavigationList>
+        <Middle>
+          <NavigationLink exact activeClassName="active" to="/">
+            Home
             </NavigationLink>
-          </p>
-          {/* <li>
+        </Middle>
+        {/* <li>
             <NavigationLink activeClassName="active" to="/about">
               About
           </NavigationLink>
@@ -29,24 +30,28 @@ const Header = () => {
               Sellers
           </NavigationLink>
           </li> */}
-        </NavigationList>
-      </nav>
+      </NavigationList>
+
     </Wrapper>
   );
 };
 
 const Wrapper = styled.header`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: grey;
+    background-color:  rgba(0, 0, 0, 1)
 `;
+
+const Middle = styled.div`
+display: flex;`
 
 const Title = styled.h1`
     font-size: 32px;
     font-weight: 800;
+    color: #ffffff
 `;
 
 const NavigationList = styled.ul`
