@@ -1,7 +1,14 @@
 import React from "react";
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import GlobalStyles from '../GlobalStyles/GlobalStyles'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useParams,
+} from "react-router-dom";
+
+import GlobalStyles from "../GlobalStyles/GlobalStyles";
 import Header from "../Header/Header";
 import LandingPage from "../LandingPage/LandingPage";
 import MainPage from "../MainPage/MainPage";
@@ -10,29 +17,30 @@ import ProductPage from "../ProductPage/ProductPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-import Cart from '../Cart';
+import Cart from "../Cart";
+//<Redirect to={`/products/${currentCountry}`} />
 
 function App() {
+  //const { countryId } = useParams();
   return (
     <BrowserRouter>
       <Wrapper>
         <GlobalStyles />
         <TheHead>
           <Header />
-          <Cart />
         </TheHead>
         <Main>
           <Switch>
             <Route exact path="/">
               <LandingPage />
             </Route>
-            <Route path="/companies/:country">
+            <Route path="/products/:country">
               <MainPage />
             </Route>
             <Route path="/categories/:country">
               <CategoryPage />
             </Route>
-            <Route path="/products/:country">
+            <Route path="/products/detail/:productId">
               <ProductPage />
             </Route>
             <Route path="/error">
@@ -51,23 +59,23 @@ function App() {
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-areas: 
-  "header header header header"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "footer footer footer footer";
+  grid-template-areas:
+    "header header header header"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "footer footer footer footer";
   grid-gap: 64px;
   width: 100vw;
   min-height: 100vh;
 `;
 
 const TheHead = styled.header`
-grid-area: header;
-`
+  grid-area: header;
+`;
 
 const Main = styled.main`
   grid-area: main;
@@ -75,9 +83,8 @@ const Main = styled.main`
 `;
 
 const TheFooter = styled.footer`
-  grid-area: footer; 
+  grid-area: footer;
   padding: 0px;
-`
+`;
 
 export default App;
-
