@@ -32,6 +32,8 @@ const DropDown = () => {
       });
   }, []);
 
+  //make a second Useffect for the other fetch
+
   //MOVE THE LOADING DIV IN THE HOME COMPONENT WITH THE APPROPRIATE SELECTOR
 
   if (countriesStatus === "loading") {
