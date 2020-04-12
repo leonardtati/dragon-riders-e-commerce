@@ -72,6 +72,18 @@ express()
     res.status(200).send({ products: productsByCountry });
   })
 
+  .get("/products/detail/:productId", (req, res) => {
+    const { productId } = req.params;
+    const product = productData.find(
+      (product) => product.id === parseInt(productId)
+    );
+    if (product) {
+      res.status(200).send({ product });
+    } else {
+      res.status(404).send({ message: "Product not found." });
+    }
+  })
+
   //---A countries Featured Products, Sorted By Lowest Price---//
 
   .get("/countries/:country/featuredproducts", (req, res) => {
