@@ -7,14 +7,15 @@ import { COLORS } from '../theme/theme';
 const Header = () => {
   return (
     <Wrapper>
-      <Title>Weary Sweaty</Title>
-      <nav>
+      
+      <Title>Welcome To Dragon Riders</Title>
+     
         <NavigationList>
-          <p>
+        <Middle>
             <NavigationLink exact activeClassName="active" to="/">
               Home
             </NavigationLink>
-          </p>
+            </Middle>
           {/* <li>
             <NavigationLink activeClassName="active" to="/about">
               About
@@ -26,23 +27,27 @@ const Header = () => {
           </NavigationLink>
           </li> */}
         </NavigationList>
-      </nav>
+     
     </Wrapper>
   );
 };
 
 const Wrapper = styled.header`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: grey;
+    background-color:  rgba(0, 0, 0, 1)
 `;
+
+const Middle = styled.div`
+display: flex;`
 
 const Title = styled.h1`
     font-size: 32px;
     font-weight: 800;
+    color: #ffffff
 `;
 
 const NavigationList = styled.ul`

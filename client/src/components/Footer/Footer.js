@@ -2,11 +2,11 @@ import React from "react";
 import styled from 'styled-components';
 // import "./Footer.css";
 
-function Footer(props) {
+function Footer() {
   return (
     <Wrapper>
       <footer>
-        <p>Footer</p>
+        <h1>Footer</h1>
         <input className="message-input" />
         <li>@DragonRiders</li>
       </footer>
@@ -20,7 +20,7 @@ const Wrapper = styled.footer`
     align-items: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: grey;
+    background-color:  rgb(242, 242, 242)
 `;
 
 export default Footer;

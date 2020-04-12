@@ -1,7 +1,17 @@
-import React from 'react';
+import { createGlobalStyle } from "styled-components";
 
-const GlobalSyles = () => {
-  return <div />;
-};
+export default createGlobalStyle`
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff 
+}
 
-export default GlobalSyles;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'sans-serif'
+}
+`
