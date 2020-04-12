@@ -10,6 +10,7 @@ import ProductPage from "../ProductPage/ProductPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
+import Cart from '../Cart';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
       <Wrapper>
         <GlobalStyles />
         <TheHead>
-        <Header />
+          <Header />
+          <Cart />
         </TheHead>
         <Main>
           <Switch>
@@ -39,7 +41,7 @@ function App() {
           </Switch>
         </Main>
         <TheFooter>
-        <Footer />
+          <Footer />
         </TheFooter>
       </Wrapper>
     </BrowserRouter>

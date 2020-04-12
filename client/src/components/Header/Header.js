@@ -3,20 +3,24 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import { COLORS } from '../theme/theme';
+import CartIcon from '../Cart/CartIcon';
+import DragonIcon from '../Header/DragonIcon';
 
 const Header = () => {
   return (
     <Wrapper>
-      
+      <CartIcon />
+      <DragonIcon />
+
       <Title>Welcome To Dragon Riders</Title>
-     
-        <NavigationList>
+
+      <NavigationList>
         <Middle>
-            <NavigationLink exact activeClassName="active" to="/">
-              Home
+          <NavigationLink exact activeClassName="active" to="/">
+            Home
             </NavigationLink>
-            </Middle>
-          {/* <li>
+        </Middle>
+        {/* <li>
             <NavigationLink activeClassName="active" to="/about">
               About
           </NavigationLink>
@@ -26,8 +30,8 @@ const Header = () => {
               Sellers
           </NavigationLink>
           </li> */}
-        </NavigationList>
-     
+      </NavigationList>
+
     </Wrapper>
   );
 };

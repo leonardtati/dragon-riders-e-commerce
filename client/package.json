@@ -10,10 +10,7 @@
     "new-component": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-<<<<<<< HEAD
     "react-redux": "^7.2.0",
-=======
->>>>>>> 35cb376ee54add2bf53117f94f7eeddcd9dced72
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
