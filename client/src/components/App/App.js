@@ -1,77 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React from "react";
 
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from 'react-router-dom';
-
-import Header from '../Header/Header';
-// import About from './About';
-import Home from '../Home/Home';
-// import ItemDetails from './ItemDetails';
-import GlobalStyles from '../GlobalStyles/GlobalStyles';
-import styled from 'styled-components';
-// import Sellers from './Sellers';
-// import ItemDetailsSeller from './ItemDetailsSeller';
-import Footer from '../Footer/Footer';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import GlobalStyles from '../GlobalStyles/GlobalStyles'
+import Header from "../Header/Header";
+import LandingPage from "../LandingPage/LandingPage";
+import MainPage from "../MainPage/MainPage";
+import CategoryPage from "../CategoryPage/CategoryPage";
+import ProductPage from "../ProductPage/ProductPage";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import styled from "styled-components";
+import Footer from "../Footer/Footer";
 
 function App() {
   return (
     <BrowserRouter>
       <Wrapper>
+        <GlobalStyles />
+        <TheHead>
         <Header />
+        </TheHead>
         <Main>
           <Switch>
             <Route exact path="/">
-              <Home />
+              <LandingPage />
             </Route>
-            {/* <Route path="/about">
-              <About />
+            <Route path="/companies/:country">
+              <MainPage />
             </Route>
-            <Route path="/items/:itemId">
-              <ItemDetails />
+            <Route path="/categories/:country">
+              <CategoryPage />
             </Route>
-            <Route path="/sellers">
-              <Sellers />
+            <Route path="/products/:country">
+              <ProductPage />
             </Route>
-            <Route path="/sellers/:sellerId">
-              <ItemDetailsSeller />
-            </Route> */}
+            <Route path="/error">
+              <ErrorPage />
+            </Route>
           </Switch>
         </Main>
+        <TheFooter>
+        <Footer />
+        </TheFooter>
       </Wrapper>
-
-      <GlobalStyles />
-      <Footer />
     </BrowserRouter>
-
   );
 }
 
 const Wrapper = styled.div`
-max-width: 800px;
-margin: auto;
+  position: relative;
+  display: grid;
+  grid-template-areas: 
+  "header header header header"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "footer footer footer footer";
+  grid-gap: 64px;
+  width: 100vw;
+  min-height: 100vh;
 `;
 
+const TheHead = styled.header`
+grid-area: header;
+`
+
 const Main = styled.main`
-padding-top: 32px;
-padding-bottom: 32px;
+  grid-area: main;
+  padding: 16px 64px;
 `;
+
+const TheFooter = styled.footer`
+  grid-area: footer; 
+  padding: 0px;
+`
 
 export default App;
 
-
-// function App() {
-//   const [bacon, setBacon] = useState(null);
-
-//   useEffect(() => {
-//     fetch('/bacon')
-//       .then(res => res.json())
-//       .then(data => setBacon(data));
-//   }, []);
-
-//   return <div>{bacon ? bacon : `...where's my stuff?...`}</div>;
-// }
-
-// export default App;
