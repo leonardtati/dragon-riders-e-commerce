@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import { COLORS } from '../theme/theme';
+import CartIcon from '../Cart/CartIcon';
+import DragonIcon from '../Header/DragonIcon';
 
 const Header = () => {
   return (
     <Wrapper>
-      <Title>Weary Sweaty</Title>
+      <Title>Dragon Riders</Title>
+      <CartIcon />
+      <DragonIcon />
       <nav>
         <NavigationList>
           <p>

@@ -19,12 +19,14 @@ import styled from 'styled-components';
 // import Sellers from './Sellers';
 // import ItemDetailsSeller from './ItemDetailsSeller';
 import Footer from '../Footer/Footer';
+import Cart from '../Cart/Cart';
 
 function App() {
   return (
     <BrowserRouter>
       <Wrapper>
         <Header />
+        <Cart />
         <Main>
           <Switch>
             <Route exact path="/">
