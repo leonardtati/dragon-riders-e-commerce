@@ -9,7 +9,6 @@ import DragonIcon from '../Header/DragonIcon';
 const Header = () => {
   return (
     <Wrapper>
-      <CartIcon />
       <DragonIcon />
 
       <Title>Welcome To Dragon Riders</Title>
@@ -38,11 +37,11 @@ const Header = () => {
 
 const Wrapper = styled.header`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color:  rgba(0, 0, 0, 1)
+    background-color:  #ffffff;
 `;
 
 const Middle = styled.div`
@@ -51,7 +50,7 @@ display: flex;`
 const Title = styled.h1`
     font-size: 32px;
     font-weight: 800;
-    color: #ffffff
+    color: black;
 `;
 
 const NavigationList = styled.ul`

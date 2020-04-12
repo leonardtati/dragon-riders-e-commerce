@@ -11,6 +11,7 @@ import DropDown from "../DropDown/DropDown";
 function Home() {
   return (
     <>
+    <NavBar/>
       <Intro>
         <p>
           Weary Sweaty sells the finest wearable equipment to help you stay

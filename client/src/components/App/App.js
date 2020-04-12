@@ -10,7 +10,6 @@ import ProductPage from "../ProductPage/ProductPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-import Cart from '../Cart';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <GlobalStyles />
         <TheHead>
           <Header />
-          <Cart />
         </TheHead>
         <Main>
           <Switch>
@@ -60,23 +58,26 @@ const Wrapper = styled.div`
   "main main main main"
   "main main main main"
   "footer footer footer footer";
-  grid-gap: 64px;
+  grid-gap: 32px;
   width: 100vw;
   min-height: 100vh;
 `;
 
 const TheHead = styled.header`
 grid-area: header;
+box-shadow: 5px 10px 8px 10px #888888
 `
 
 const Main = styled.main`
   grid-area: main;
-  padding: 16px 64px;
+  padding: 0px;
 `;
 
-const TheFooter = styled.footer`
+const TheFooter = styled.div`
   grid-area: footer; 
   padding: 0px;
+  margin-top: -50px;
+  height: 70px;
 `
 
 export default App;
