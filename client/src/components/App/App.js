@@ -34,13 +34,13 @@ function App() {
             <Route exact path="/">
               <LandingPage />
             </Route>
-            <Route path="/companies/:country">
+            <Route path="/products/:country">
               <MainPage />
             </Route>
             <Route path="/categories/:country">
               <CategoryPage />
             </Route>
-            <Route path="/products/:country">
+            <Route path="/products/detail/:productId">
               <ProductPage />
             </Route>
             <Route path="/error">

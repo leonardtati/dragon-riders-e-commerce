@@ -36,34 +36,35 @@ const DropDown = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(receiveCountries(data));
+        setIsSelected(!isSelected);
       })
       .catch((error) => {
         dispatch(receiveCountriesError());
       });
+  }, []);
+
+  React.useEffect(() => {
+    //console.log("SECONDFECTH");
     dispatch(requestCountryProducts());
-    fetch(`/products/${countryValue}`)
+
+    fetch(`/products/${countryValue.replace(" ", "")}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("INSECONDFETCH", data);
         dispatch(receiveCountryProducts(data));
+        setIsSelected(!isSelected);
       })
       .catch((error) => {
         dispatch(receiveCountryProductsError());
       });
-  }, [countryValue]);
-
-  // React.useEffect(() => {
-  //console.log("SECONDFECTH");
-
-  //}, [countryValue]);
+  }, []);
 
   console.log("EVENT", countryValue);
 
   console.log("GETCOUNTRY", getCountries);
 
-
   //make a second Useffect for the other fetch
-
+  // selected={isSelected}
   //MOVE THE LOADING DIV IN THE HOME COMPONENT WITH THE APPROPRIATE SELECTOR
 
   if (countriesStatus === "loading") {
@@ -73,12 +74,18 @@ const DropDown = () => {
 
   return (
     <Wrapper>
-      <select onChange={(ev) => setCountryValue(ev.target.value)}>
+      <select
+        defaultValue="X"
+        onChange={(ev) => setCountryValue(ev.target.value)}
+      >
+        <option selected></option>
         {countryArray.map((country) => {
           return <option value={country}>{country}</option>;
         })}
       </select>
-      <MainPage />
+      <Link to={`products/${countryValue}`}>
+        <button>GO TO LOCATION</button>
+      </Link>
     </Wrapper>
   );
 };

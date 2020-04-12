@@ -1,7 +1,7 @@
 import React from "react";
 
 const MainPage = () => {
-  return <div>MainPage</div>;
+  return <h1>DRAGON FOR LIFE</h1>;
 };
 
 export default MainPage;
