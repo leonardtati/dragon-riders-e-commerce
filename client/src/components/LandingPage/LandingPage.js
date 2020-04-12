@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import NavBar from '../NavBar'
 // import ListingGrid from '../ListingGrid/ListingGrid';
 // import Paragraph from './Paragraph';
 
@@ -11,8 +11,9 @@ function Home() {
         <>
             <Intro>
                 <p>
-                    HELLO !!!!!! Weary Sweaty sells the finest wearable equipment to help you stay healthy.
+                    HELLO !!!!!!
                 </p>
+                
                 {/* <Paragraph>
                     <strong>Browse items:</strong>
                 </Paragraph> */}
