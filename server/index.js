@@ -66,12 +66,12 @@ express()
       })
       .filter((id) => id !== undefined);
     const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.find((product) => {
+      return productData.filter((product) => {
         return product.companyId === id;
       });
     });
 
-    res.status(200).send({ products: productsByCountry });
+    res.status(200).send({ products: _.flatten(productsByCountry) });
   })
 
   .get("/products/detail/:productId", (req, res) => {
@@ -152,11 +152,11 @@ express()
       })
       .filter((id) => id !== undefined);
     const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.find((product) => {
+      return productData.filter((product) => {
         return product.companyId === id;
       });
     });
-    const productsByCategories = productsByCountry.map((product) => {
+    const productsByCategories = _.flatten(productsByCountry).map((product) => {
       return product.category;
     });
     res
