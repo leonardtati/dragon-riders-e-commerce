@@ -4,7 +4,8 @@ export default createGlobalStyle`
 body {
   margin: 0;
   padding: 0;
-  background: #ffffff 
+  background: #ffffff;
+
 }
 
 *,
@@ -12,6 +13,6 @@ body {
 *:after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  font-family: 'sans-serif'
+  font-family: 'Source Sans Pro', sans-serif;
 }
-`
+`;

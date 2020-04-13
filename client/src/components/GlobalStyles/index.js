@@ -1,1 +1,1 @@
-export { default } from './GlobalSyles';
+export { default } from "./GlobalStyles";

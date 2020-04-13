@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import GlobalStyles from "../GlobalStyles/GlobalStyles";
 import Header from "../Header/Header";
@@ -12,10 +8,10 @@ import LandingPage from "../LandingPage/LandingPage";
 import MainPage from "../MainPage/MainPage";
 import CategoryPage from "../CategoryPage/CategoryPage";
 import ProductPage from "../ProductPage/ProductPage";
+import CartPage from '../CartPage/CartPage'
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +34,9 @@ function App() {
             <Route path="/products/detail/:productId">
               <ProductPage />
             </Route>
+            <Route path="/cart/:order">
+              <CartPage />
+            </Route>
             <Route path="/error">
               <ErrorPage />
             </Route>
@@ -54,24 +53,24 @@ function App() {
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-areas: 
-  "header header header header"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "main main main main"
-  "footer footer footer footer";
-  grid-gap: 32px;
+  grid-template-areas:
+    "header header header header"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "main main main main"
+    "footer footer footer footer";
+  /* grid-gap: 32px; */
   width: 100vw;
   min-height: 100vh;
 `;
 
 const TheHead = styled.header`
-grid-area: header;
-box-shadow: 5px 10px 8px 10px #888888
-`
+  grid-area: header;
+  box-shadow: 5px 0px 5px 10px #f5f5f5;
+`;
 
 const Main = styled.main`
   grid-area: main;
@@ -79,10 +78,10 @@ const Main = styled.main`
 `;
 
 const TheFooter = styled.div`
-  grid-area: footer; 
+  grid-area: footer;
   padding: 0px;
-  margin-top: -50px;
+  /* margin-top: -50px; */
   height: 70px;
-`
+`;
 
 export default App;
