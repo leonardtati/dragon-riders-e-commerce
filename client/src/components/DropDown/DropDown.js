@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
+import ErrorPage from "../ErrorPage/ErrorPage"
 import {
   requestCountries,
   receiveCountries,
@@ -13,7 +13,6 @@ import {
 } from "../../actions";
 
 const DropDown = () => {
-  //const { countryId } = useParams();
   const dispatch = useDispatch();
   const countriesStatus = useSelector((state) => state.country.status);
   const getCountries = useSelector((state) => state.country.countries);
@@ -31,7 +30,7 @@ const DropDown = () => {
         setIsSelected(!isSelected);
       })
       .catch((error) => {
-        dispatch(receiveCountriesError());
+        dispatch(receiveCountriesError(error));
       });
   }, []);
 
@@ -54,7 +53,7 @@ const DropDown = () => {
             </Link>
           </>
         ) : (
-          <div>LOADING</div>
+          <ErrorPage/>
         )}
       </div>
     </Wrapper>
