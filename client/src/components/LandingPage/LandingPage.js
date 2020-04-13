@@ -12,10 +12,10 @@ function Home() {
   return (
     <>
       <LandingWrapper>
-        {/* <p>
+        <PageDescription>
           Weary Sweaty sells the finest wearable equipment to help you stay
           healthy.
-        </p> */}
+        </PageDescription>
         <DropDown />
       </LandingWrapper>
       {/* <ListingGrid itemList={Object.values(items)} /> */}
@@ -29,6 +29,14 @@ const LandingWrapper = styled.div`
   height: 100vh;
   background-image: url("/bgimage.png");
   background-size: cover;
+`;
+
+const PageDescription = styled.p`
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
 `;
 
 export default Home;
