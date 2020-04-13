@@ -13,14 +13,13 @@ import {
 } from "../../actions";
 
 const DropDown = () => {
-  //const { countryId } = useParams();
   const dispatch = useDispatch();
   const countriesStatus = useSelector((state) => state.country.status);
-  const getCountries = useSelector((state) => state.country.countries);
+  const countryList = useSelector((state) => state.country.countries);
   const [countryValue, setCountryValue] = React.useState("");
   const [isSelected, setIsSelected] = React.useState(false);
 
-  const countryArray = getCountries.countries;
+  const countryArray = countryList.countries;
 
   React.useEffect(() => {
     dispatch(requestCountries());
@@ -34,7 +33,6 @@ const DropDown = () => {
         dispatch(receiveCountriesError());
       });
   }, []);
-
   return (
     <Wrapper>
       <SelectContainer>
@@ -49,13 +47,19 @@ const DropDown = () => {
                 return <option value={country}>{country}</option>;
               })}
             </StyledSelect>
-            <Link to={`products/${countryValue}`}>
-              <StyledButton>CONFIRM</StyledButton>
-            </Link>
+            {countryList.countries.includes(countryValue) ? (
+              <Link to={`products/${countryValue}`}>
+                <StyledButton>CONFIRM</StyledButton>
+              </Link>
+            ) : (
+              <Link to={"/"}>
+                <StyledButton>CONFIRM</StyledButton>
+              </Link>
+            )}
           </>
         ) : (
-            <div>LOADING</div>
-          )}
+          <div>LOADING</div>
+        )}
       </SelectContainer>
     </Wrapper>
   );
@@ -70,24 +74,27 @@ const StyledSelect = styled.select`
   width: 300px;
   height: 40px;
   font-size: 18px;
-  option{
+  option {
     font-size: 18px;
   }
-`
+`;
 const SelectContainer = styled.div`
-    width: 400px;
-    background-color: white;
-    height: 96px;
-    margin-top: 105px;
-    margin-right: 535px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-`
+  width: 400px;
+  background-color: white;
+  height: 96px;
+  margin-top: 105px;
+  margin-right: 560px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+`;
 
 const StyledButton = styled.button`
   background: hsl(258deg, 100%, 50%);
+  margin-left: 5px;
+  font-size: 15px;
+  border-radius: 5px;
   color: white;
   width: 100px;
   height: 40px;
@@ -95,6 +102,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   outline: none;
   border: none;
-`
+`;
 
 export default DropDown;

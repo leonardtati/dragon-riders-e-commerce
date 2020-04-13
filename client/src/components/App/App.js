@@ -66,7 +66,6 @@ const Wrapper = styled.div`
 
 const TheHead = styled.header`
   grid-area: header;
-  box-shadow: 5px 0px 5px 10px #f5f5f5;
 `;
 
 const Main = styled.main`
@@ -77,8 +76,12 @@ const Main = styled.main`
 const TheFooter = styled.div`
   grid-area: footer;
   padding: 0px;
-  /* margin-top: -50px; */
   height: 70px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background-color: #f2f2f2;
+  color: #050594;
 `;
 
 export default App;
