@@ -15,14 +15,12 @@ function Home() {
     <>
       <LandingWrapper>
         {countriesStatus === "error" || getCountries.length > 0 ? (
-          <ErrorPage/>
+          <div>BRUH!!!!!</div>
         ) : 
 
         <DropDown />
         
         }
-    
-       
       </LandingWrapper>
     </>
   );

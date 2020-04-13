@@ -36,10 +36,10 @@ const DropDown = () => {
 
   return (
     <Wrapper>
-      <div>
+      <SelectContainer>
         {countriesStatus === "idle" ? (
           <>
-            <select
+            <StyledSelect
               defaultValue=""
               onChange={(ev) => setCountryValue(ev.target.value)}
             >
@@ -47,15 +47,15 @@ const DropDown = () => {
               {countryArray.map((country) => {
                 return <option value={country}>{country}</option>;
               })}
-            </select>
+            </StyledSelect>
             <Link to={`products/${countryValue}`}>
-              <button>Confirm Country</button>
+              <StyledButton>CONFIRM</StyledButton>
             </Link>
           </>
         ) : (
-          <ErrorPage/>
-        )}
-      </div>
+            <ErrorPage />
+          )}
+      </SelectContainer>
     </Wrapper>
   );
 };
@@ -63,18 +63,37 @@ const DropDown = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  /* width: 100%;
-  height: 100vh;
-  height: 200px;
-  background-image: url("/bgimage.png");
-  background-size: cover; */
 `;
 
-const Select = styled.select`
-  width: 400px;
+const StyledSelect = styled.select`
+  width: 300px;
   height: 40px;
-  font-size: 14px;
+  font-size: 18px;
+  option{
+    font-size: 18px;
+  }
+`
+const SelectContainer = styled.div`
+    width: 400px;
+    background-color: white;
+    height: 96px;
+    margin-top: 105px;
+    margin-right: 535px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+`
 
+const StyledButton = styled.button`
+  background: hsl(258deg, 100%, 50%);
+  color: white;
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  border: none;
 `
 
 export default DropDown;
