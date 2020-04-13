@@ -8,19 +8,18 @@ import { useSelector } from 'react-redux';
 import DropDown from "../DropDown/DropDown";
 import ErrorPage from '../ErrorPage/ErrorPage';
 
-function Home() {
+function Home() { 
+  
   const countriesStatus = useSelector((state) => state.country.status);
   const getCountries = useSelector((state) => state.country.countries)
   return (
     <>
       <LandingWrapper>
-        {countriesStatus === "error" || getCountries.length > 0 ? (
-          <div>BRUH!!!!!</div>
-        ) : 
-
+        <PageDescription>
+          Weary Sweaty sells the finest wearable equipment to help you stay
+          healthy.
+        </PageDescription>
         <DropDown />
-        
-        }
       </LandingWrapper>
     </>
   );
@@ -32,6 +31,14 @@ const LandingWrapper = styled.div`
   height: 100vh;
   background-image: url("/bgimage.png");
   background-size: cover;
+`;
+
+const PageDescription = styled.p`
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
 `;
 
 export default Home;
