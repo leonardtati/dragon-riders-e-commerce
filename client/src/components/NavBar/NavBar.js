@@ -8,9 +8,10 @@ import {requestCategories, receiveCategories, receiveCategoriesError} from '../.
 const NavBar = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const categoriesState = useSelector((state) => state.categories)
-
+  const categories = useSelector((state) => state.category.categories)
+  const categoriesState = useSelector((state) => state.category.status)
   useEffect(() => {
+    console.log("HERE?")
     dispatch(requestCategories())
     fetch(`/categories/${params.country.replace(" ", "")}`)
     .then(res => {
@@ -26,11 +27,13 @@ const NavBar = () => {
   return (
   <>
   <NavContainer>
-    {Object.values(categoriesState).map(category => {
+    {categoriesState === "loading" ? <div>LOADING</div> :   
+    categories.map(category => {
       return (
         <StyledLink to={`/categories/${category}`}>{category}</StyledLink>
       )
     })}
+  
   </NavContainer>
   </>
   )

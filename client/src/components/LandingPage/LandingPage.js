@@ -11,15 +11,14 @@ function Home() {
   const countriesStatus = useSelector((state) => state.country.status);
   return (
     <>
-      {countriesStatus === "loading" ? <div>LOADING</div> :    
       <Intro>
+        
         <p>
           Weary Sweaty sells the finest wearable equipment to help you stay
           healthy.
         </p>
         <DropDown />
       </Intro>
-      } 
       {/* <ListingGrid itemList={Object.values(items)} /> */}
     </>
   );

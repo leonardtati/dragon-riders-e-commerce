@@ -4,6 +4,7 @@ const initialState = {
 }
 
 export default function categoryReducer( state = initialState, action){
+    console.log(action)
     switch(action.type) {
         case "REQUEST_CATEGORIES": {
             return {
