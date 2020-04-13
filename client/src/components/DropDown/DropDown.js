@@ -50,7 +50,6 @@ const DropDown = () => {
     fetch(`/products/${countryValue.replace(" ", "")}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("INSECONDFETCH", data);
         dispatch(receiveCountryProducts(data));
         setIsSelected(!isSelected);
       })
@@ -59,9 +58,6 @@ const DropDown = () => {
       });
   }, []);
 
-  console.log("EVENT", countryValue);
-
-  console.log("GETCOUNTRY", getCountries);
 
   //make a second Useffect for the other fetch
   // selected={isSelected}
@@ -74,11 +70,12 @@ const DropDown = () => {
 
   return (
     <Wrapper>
+      <div>
       <select
         defaultValue="X"
         onChange={(ev) => setCountryValue(ev.target.value)}
       >
-        <option selected></option>
+        <option selected>Please Choose A Country</option>
         {countryArray.map((country) => {
           return <option value={country}>{country}</option>;
         })}
@@ -86,10 +83,16 @@ const DropDown = () => {
       <Link to={`products/${countryValue}`}>
         <button>GO TO LOCATION</button>
       </Link>
+      </div>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: 200px
+`;
 
 export default DropDown;

@@ -4,8 +4,6 @@ import {
   BrowserRouter,
   Switch,
   Route,
-  Redirect,
-  useParams,
 } from "react-router-dom";
 
 import GlobalStyles from "../GlobalStyles/GlobalStyles";
@@ -17,11 +15,8 @@ import ProductPage from "../ProductPage/ProductPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-import Cart from "../Cart";
-//<Redirect to={`/products/${currentCountry}`} />
 
 function App() {
-  //const { countryId } = useParams();
   return (
     <BrowserRouter>
       <Wrapper>
@@ -59,32 +54,35 @@ function App() {
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-areas:
-    "header header header header"
-    "main main main main"
-    "main main main main"
-    "main main main main"
-    "main main main main"
-    "main main main main"
-    "main main main main"
-    "footer footer footer footer";
-  grid-gap: 64px;
+  grid-template-areas: 
+  "header header header header"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "main main main main"
+  "footer footer footer footer";
+  grid-gap: 32px;
   width: 100vw;
   min-height: 100vh;
 `;
 
 const TheHead = styled.header`
-  grid-area: header;
-`;
+grid-area: header;
+box-shadow: 5px 10px 8px 10px #888888
+`
 
 const Main = styled.main`
   grid-area: main;
-  padding: 16px 64px;
-`;
-
-const TheFooter = styled.footer`
-  grid-area: footer;
   padding: 0px;
 `;
+
+const TheFooter = styled.div`
+  grid-area: footer; 
+  padding: 0px;
+  margin-top: -50px;
+  height: 70px;
+`
 
 export default App;
