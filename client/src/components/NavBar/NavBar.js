@@ -11,7 +11,6 @@ const NavBar = () => {
   const categories = useSelector((state) => state.category.categories)
   const categoriesState = useSelector((state) => state.category.status)
   useEffect(() => {
-    console.log("HERE?")
     dispatch(requestCategories())
     fetch(`/categories/${params.country.replace(" ", "")}`)
     .then(res => {
@@ -53,7 +52,8 @@ const StyledLink = styled(NavLink)`
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
-  padding-right: 10px;
+  padding-right: 40px;
+  text-align: center;
 
   &:hover {
     background-color: #111;

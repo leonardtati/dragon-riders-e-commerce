@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
+import ErrorPage from "../ErrorPage/ErrorPage"
 import {
   requestCountries,
   receiveCountries,
@@ -30,7 +30,7 @@ const DropDown = () => {
         setIsSelected(!isSelected);
       })
       .catch((error) => {
-        dispatch(receiveCountriesError());
+        dispatch(receiveCountriesError(error));
       });
   }, []);
   return (

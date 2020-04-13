@@ -6,9 +6,12 @@ import styled from "styled-components";
 // import { items } from '../data/data';
 import { useSelector } from 'react-redux';
 import DropDown from "../DropDown/DropDown";
+import ErrorPage from '../ErrorPage/ErrorPage';
 
-function Home() {
+function Home() { 
+  
   const countriesStatus = useSelector((state) => state.country.status);
+  const getCountries = useSelector((state) => state.country.countries)
   return (
     <>
       <LandingWrapper>
@@ -18,7 +21,6 @@ function Home() {
         </PageDescription>
         <DropDown />
       </LandingWrapper>
-      {/* <ListingGrid itemList={Object.values(items)} /> */}
     </>
   );
 }
