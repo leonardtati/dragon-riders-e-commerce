@@ -1,7 +1,12 @@
 import React from "react";
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import GlobalStyles from '../GlobalStyles/GlobalStyles'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import GlobalStyles from "../GlobalStyles/GlobalStyles";
 import Header from "../Header/Header";
 import LandingPage from "../LandingPage/LandingPage";
 import MainPage from "../MainPage/MainPage";
@@ -24,13 +29,13 @@ function App() {
             <Route exact path="/">
               <LandingPage />
             </Route>
-            <Route path="/companies/:country">
+            <Route path="/products/:country">
               <MainPage />
             </Route>
             <Route path="/categories/:country">
               <CategoryPage />
             </Route>
-            <Route path="/products/:country">
+            <Route path="/products/detail/:productId">
               <ProductPage />
             </Route>
             <Route path="/error">
@@ -81,4 +86,3 @@ const TheFooter = styled.div`
 `
 
 export default App;
-

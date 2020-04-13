@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavBar from '../NavBar'
 // import ListingGrid from '../ListingGrid/ListingGrid';
 // import Paragraph from './Paragraph';
 
@@ -11,7 +10,7 @@ import DropDown from "../DropDown/DropDown";
 function Home() {
   return (
     <>
-    <NavBar/>
+   
       <Intro>
         <p>
           Weary Sweaty sells the finest wearable equipment to help you stay

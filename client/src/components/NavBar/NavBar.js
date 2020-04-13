@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBar = () => {
+  const params = useParams()
+  console.log("PARAMS?", params)
   const [categories, setCategories] = useState('')
   useEffect(() => {
-    fetch('/categories/unitedstates')
+    fetch(`/categories/${params.country.replace(" ", "")}`)
     .then(res => {
       return res.json()
     })
@@ -50,11 +52,6 @@ const StyledLink = styled(NavLink)`
 
 `
 
-{/* <StyledLink to="/categories/:category2">Category 2</StyledLink>
-<StyledLink to="/categories/:category3">Category 3</StyledLink>
-<StyledLink to="/categories/:category4">Category 4</StyledLink>
-<StyledLink to="/categories/:category5">Category 5</StyledLink>
-<StyledLink to="/categories/:category6">Category 6</StyledLink>
-<StyledLink to="/categories/:category7">Category 7</StyledLink> */}
+
 
 export default NavBar;
