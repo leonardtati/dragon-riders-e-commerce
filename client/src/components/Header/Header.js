@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CartIcon from "../Cart/CartIcon";
+import CartIcon from "../CartPage/CartIcon";
 import DragonIcon from "../Header/DragonIcon";
 
 const Header = () => {
