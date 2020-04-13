@@ -63,15 +63,17 @@ const DropDown = () => {
   // selected={isSelected}
   //MOVE THE LOADING DIV IN THE HOME COMPONENT WITH THE APPROPRIATE SELECTOR
 
-  if (countriesStatus === "loading") {
-    return <div>LOADING</div>;
-  }
+  // if (countriesStatus === "loading") {
+  //   return <div>LOADING</div>;
+  // }
   //<button onClick={(ev) =>{handleCountryValue(ev.target.value)}}></button>
 
   return (
     <Wrapper>
+    {countriesStatus === "loading" ? <div>LOADING</div> :    
+
       <div>
-      <select
+      <Select
         defaultValue="X"
         onChange={(ev) => setCountryValue(ev.target.value)}
       >
@@ -79,11 +81,12 @@ const DropDown = () => {
         {countryArray.map((country) => {
           return <option value={country}>{country}</option>;
         })}
-      </select>
+      </Select>
       <Link to={`products/${countryValue}`}>
         <button>GO TO LOCATION</button>
       </Link>
       </div>
+}
     </Wrapper>
   );
 };
@@ -94,5 +97,12 @@ const Wrapper = styled.div`
   width: 500px;
   height: 200px
 `;
+
+const Select = styled.select`
+  width: 400px;
+  height: 40px;
+  font-size: 14px;
+
+`
 
 export default DropDown;

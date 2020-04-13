@@ -1,7 +1,7 @@
 const initialState = {
   countries: [],
   products: [],
-  status: "loading",
+  status: "idle",
 };
 
 export default function countryReducer(state = initialState, action) {
@@ -25,28 +25,6 @@ export default function countryReducer(state = initialState, action) {
         status: "error",
       };
     }
-
-    case "REQUEST_COUNTRY_PRODUCTS": {
-      return {
-        ...state,
-        status: "loading",
-      };
-    }
-    case "RECEIVE_COUNTRY_PRODUCTS": {
-      return {
-        ...state,
-        products: action.products,
-        status: "idle",
-      };
-    }
-
-    case "RECEIVE_COUNTRY_PRODUCTS_ERROR": {
-      return {
-        ...state,
-        status: "error",
-      };
-    }
-
     default: {
       return state;
     }

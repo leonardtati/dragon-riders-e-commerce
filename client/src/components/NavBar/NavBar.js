@@ -1,26 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import {requestCategories, receiveCategories, receiveCategoriesError} from '../../actions';
 const NavBar = () => {
-  const params = useParams()
-  console.log("PARAMS?", params)
-  const [categories, setCategories] = useState('')
+  const dispatch = useDispatch();
+  const params = useParams();
+  const categoriesState = useSelector((state) => state.categories)
+
   useEffect(() => {
+    dispatch(requestCategories())
     fetch(`/categories/${params.country.replace(" ", "")}`)
     .then(res => {
       return res.json()
     })
     .then(data => {
-      setCategories(data.categories)
+      dispatch(receiveCategories(data.categories))
+    })
+    .catch(error => {
+      dispatch(receiveCategoriesError(error))
     })
   }, [])
-  console.log(categories)
   return (
   <>
   <NavContainer>
-    {Object.values(categories).map(category => {
+    {Object.values(categoriesState).map(category => {
       return (
         <StyledLink to={`/categories/${category}`}>{category}</StyledLink>
       )
@@ -33,19 +39,18 @@ const NavBar = () => {
 const NavContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-grow: 0.25;
   background-color: #333;
   padding-top: 20px;
   padding-bottom: 20px;
-
-
 `
 const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
+  padding-right: 10px;
 
   &:hover {
     background-color: #111;
