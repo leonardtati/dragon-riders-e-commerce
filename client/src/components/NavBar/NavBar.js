@@ -22,7 +22,7 @@ const NavBar = () => {
   <NavContainer>
     {Object.values(categories).map(category => {
       return (
-        <StyledLink to={`/categories/${category.categories}`}>{category}</StyledLink>
+        <StyledLink to={`/categories/${category}`}>{category}</StyledLink>
       )
     })}
   </NavContainer>
@@ -31,25 +31,25 @@ const NavBar = () => {
 };
 
 const NavContainer = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-between;
-flex-grow: 0.25;
-background-color: #333;
-padding-top: 20px;
-padding-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 0.25;
+  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+
 `
 const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
-  &:hover {
-    background-color: #111
-    border: 2px solid red
-    border-radius: 50px;
-  }
 
+  &:hover {
+    background-color: #111;
+  }
 `
 
 
