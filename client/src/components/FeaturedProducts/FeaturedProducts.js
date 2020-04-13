@@ -11,13 +11,12 @@ const countryId = useParams()
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
         .then(res => res.json())
         .then(data => {
-            console.log(data.features);
             setFeature(data.features);
             setLoad("idle")
         })
     }, [])
     return (
-        <div>
+        <FeatureWrapper>
             {load === "loading" ? <div>LOAD</div> :
             features.map(feature => {
                return (
@@ -25,29 +24,35 @@ const countryId = useParams()
                 <ProductImage src={feature.imageSrc}></ProductImage>
                 <ProductName>{feature.name}</ProductName>
                 <ProductPrice>{feature.price}</ProductPrice>
-               <button>Buy Now</button>
+               <button>Add To Cart</button>
                 </ProductWrapper>
                 )
             })}
-            <div></div>
-        </div>
+        </FeatureWrapper>
     )
 }
 
+const FeatureWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 32px;
+  margin: 32px 0;
+`
+
 const ProductWrapper = styled.div`
-    display: flex;
     padding: 36px;
     border-radius: 16px;
+    box-shadow: 2px 5px 36px rgba(0, 0, 0, 0.1);
     text-align: center;
-    box-shadow: 
 `
 
 const ProductImage = styled.img`
-    width: 40%;
+    border-radius: 12px;
+    width: 80%;
 `
 const ProductName = styled.h3`
     font-size: 24px;
-    color: black;
+    color: #333;
     margin-top: 12px;
 `
 

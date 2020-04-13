@@ -52,7 +52,7 @@ const StyledLink = styled(NavLink)`
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
-  padding-right: 10px;
+  padding-right: 80px;
 
   &:hover {
     background-color: #111;
