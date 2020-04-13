@@ -4,10 +4,11 @@ import styled from "styled-components";
 // import Paragraph from './Paragraph';
 
 // import { items } from '../data/data';
-
+import { useSelector } from 'react-redux';
 import DropDown from "../DropDown/DropDown";
 
 function Home() {
+  const countriesStatus = useSelector((state) => state.country.status);
   return (
     <>
       <LandingWrapper>
