@@ -64,8 +64,11 @@ const DropDown = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 500px;
+  /* width: 100%;
+  height: 100vh;
   height: 200px;
+  background-image: url("/bgimage.png");
+  background-size: cover; */
 `;
 
 export default DropDown;
