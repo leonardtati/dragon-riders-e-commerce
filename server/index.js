@@ -3,8 +3,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const companyData = require("../server/data/companies.json");
-const productData = require("../server/data/items.json");
+const companyData = require("./data/companies.json");
+const productData = require("./data/items.json");
+const _ = require("lodash");
+
 const PORT = 4000;
 express()
   .use(function (req, res, next) {
@@ -99,12 +101,11 @@ express()
       })
       .filter((id) => id !== undefined);
     const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.find((product) => {
+      return productData.filter((product) => {
         return product.companyId === id;
       });
     });
-
-    const lowestPrices = productsByCountry.filter((product) => {
+    const lowestPrices = _.flatten(productsByCountry).filter((product) => {
       if (product.numInStock > 0) {
         let newPrice = product.price.slice(1);
         return parseFloat(newPrice) < 20;
