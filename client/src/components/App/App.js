@@ -8,10 +8,10 @@ import LandingPage from "../LandingPage/LandingPage";
 import MainPage from "../MainPage/MainPage";
 import CategoryPage from "../CategoryPage/CategoryPage";
 import ProductPage from "../ProductPage/ProductPage";
+import CartPage from '../CartPage/CartPage'
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +33,9 @@ function App() {
             </Route>
             <Route path="/products/detail/:productId">
               <ProductPage />
+            </Route>
+            <Route path="/cart/:order">
+              <CartPage />
             </Route>
             <Route path="/error">
               <ErrorPage />
