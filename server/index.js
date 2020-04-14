@@ -162,9 +162,6 @@ express()
     const productsByCategories = _.flatten(productsByCountry).map((product) => {
       return product.category;
     });
-    // res
-    //   .status(200)
-    //   .send({ categories: Array.from(new Set(productsByCategories)) });
     return simulateProblems(res, {
       categories: Array.from(new Set(productsByCategories)),
     });
