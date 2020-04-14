@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {requestCategories, receiveCategories, receiveCategoriesError} from '../../actions';
+import { requestCategories, receiveCategories, receiveCategoriesError} from '../../actions';
 const NavBar = () => {
   const dispatch = useDispatch();
   const params = useParams();

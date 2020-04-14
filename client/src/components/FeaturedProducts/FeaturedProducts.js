@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { requestFeatures, receiveFeatures, receiveFeaturesErrors } from '../../actions'
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 function FeaturedProducts() {
-const [features, setFeature] = useState('');
-const [load, setLoad] = useState("loading")
-const countryId = useParams()
+
+    const features = useSelector((state) => state.feature.features);
+    const status = useSelector((state) => state.feature.status);
+    const countryId = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(requestFeatures())
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
         .then(res => res.json())
         .then(data => {
-            setFeature(data.features);
-            setLoad("idle")
+            dispatch(receiveFeatures(data.features));
+        })
+        .catch(error => {
+            dispatch(receiveFeaturesErrors(error));
         })
     }, [])
     return (
         <FeatureWrapper>
-            {load === "loading" ? <div>LOAD</div> :
+            {status === "loading" ? <CircularProgress /> :
             features.map(feature => {
-               return (
+                return (
                 <ProductWrapper>
                 <ProductImage src={feature.imageSrc}></ProductImage>
                 <ProductName>{feature.name}</ProductName>
                 <ProductPrice>{feature.price}</ProductPrice>
-               <button>Add To Cart</button>
+                <button>Add To Cart</button>
                 </ProductWrapper>
                 )
             })}
@@ -33,10 +41,10 @@ const countryId = useParams()
 }
 
 const FeatureWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 32px;
-  margin: 32px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 32px;
+    margin: 32px 0;
 `
 
 const ProductWrapper = styled.div`

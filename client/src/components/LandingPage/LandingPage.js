@@ -7,20 +7,21 @@ import styled from "styled-components";
 import { useSelector } from 'react-redux';
 import DropDown from "../DropDown/DropDown";
 import ErrorPage from '../ErrorPage/ErrorPage';
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 function Home() { 
   
   const countriesStatus = useSelector((state) => state.country.status);
-  const getCountries = useSelector((state) => state.country.countries)
+
   return (
     <>
-      <LandingWrapper>
-        <PageDescription>
-          Weary Sweaty sells the finest wearable equipment to help you stay
-          healthy.
-        </PageDescription>
-        <DropDown />
-      </LandingWrapper>
+    <LandingWrapper>
+    <PageDescription>
+      Weary Sweaty sells the finest wearable equipment to help you stay
+      healthy.
+    </PageDescription>
+    <DropDown />
+    </LandingWrapper>
     </>
   );
 }
