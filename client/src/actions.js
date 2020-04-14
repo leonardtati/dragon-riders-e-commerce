@@ -43,3 +43,19 @@ export const receiveCategories = (categories) => ({
 export const receiveCategoriesError = () => ({
   type: "RECEIVE_CATEGORIES_ERROR",
 })
+
+//--------------Add item to cart----------//
+
+export const addProduct = (product) => ({
+  type: "ADD_PRODUCT",
+  product,
+});
+
+export const removeItem = (productId) => ({
+  type: "REMOVE_ITEM",
+  productId,
+});
+
+export const clearCart = () => ({
+  type: "CLEAR_CART",
+});
