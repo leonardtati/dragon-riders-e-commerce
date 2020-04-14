@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const companyData = require("./data/companies.json");
 const productData = require("./data/items.json");
 const _ = require("lodash");
-
+const { simulateProblems } = require("./helpers.js");
 const PORT = 4000;
 express()
   .use(function (req, res, next) {
@@ -48,7 +48,7 @@ express()
         company.country.replace(" ", "").toLowerCase() === country.toLowerCase()
       );
     });
-    res.status(200).send({ companies: companiesByCountry });
+    return simulateProblems(res, { companies: companiesByCountry });
   })
 
   //----Gets the Products by each country----//
@@ -70,8 +70,7 @@ express()
         return product.companyId === id;
       });
     });
-
-    res.status(200).send({ products: _.flatten(productsByCountry) });
+    return simulateProblems(res, { products: _.flatten(productsByCountry) });
   })
 
   .get("/products/detail/:productId", (req, res) => {
@@ -80,9 +79,9 @@ express()
       (product) => product.id === parseInt(productId)
     );
     if (product) {
-      res.status(200).send({ product });
+      return simulateProblems(res, { product });
     } else {
-      res.status(404).send({ message: "Product not found." });
+      return simulateProblems(res, { message: "Product not found." });
     }
   })
 
@@ -111,26 +110,30 @@ express()
         return parseFloat(newPrice) < 20;
       }
     });
-    res.status(200).send({ features: lowestPrices });
+    return simulateProblems(res, { features: lowestPrices });
   })
 
   //Order-Form Validation
 
   .post("/order", (req, res) => {
     const { order_summary } = req.body;
-    const updateOrder = order_summary.map((item) => {
+    order_summary.map((item) => {
       if (!item.item_id || !item.quantity) {
         res
           .status(400)
-          .send({ message: "Item Id and/or Quantaties Missing :(" });
+          .send({ message: "Item Id and/or Quantisties Missing :(" });
       }
-      return productData
+      productData
         .filter((product) => product.id === item.item_id)
         .map((orderItem) => {
-          if (orderItem.numInStock - item.quantity > 0) {
+          if (orderItem.numInStock - item.quantity >= 0) {
             orderItem.numInStock -= item.quantity;
-            res.status(200).send({
+            return simulateProblems(res, {
               message: "Successful Purchase!",
+            });
+          } else {
+            return simulateProblems(res, {
+              message: `We're out of ${orderItem.name} in our stock`,
             });
           }
         });
@@ -159,9 +162,12 @@ express()
     const productsByCategories = _.flatten(productsByCountry).map((product) => {
       return product.category;
     });
-    res
-      .status(200)
-      .send({ categories: Array.from(new Set(productsByCategories)) });
+    // res
+    //   .status(200)
+    //   .send({ categories: Array.from(new Set(productsByCategories)) });
+    return simulateProblems(res, {
+      categories: Array.from(new Set(productsByCategories)),
+    });
   })
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
