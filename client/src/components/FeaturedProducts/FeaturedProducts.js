@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { requestFeatures, receiveFeatures, receiveFeaturesErrors } from '../../actions'
 import CircularProgress from "@material-ui/core/CircularProgress"
-
+// import CategoryPage from "../CategoryPage/CategoryPage"
 function FeaturedProducts() {
 
     const features = useSelector((state) => state.feature.features);
@@ -17,7 +17,8 @@ function FeaturedProducts() {
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
         .then(res => res.json())
         .then(data => {
-            dispatch(receiveFeatures(data.features));
+            console.log("DATE", data)
+            dispatch(receiveFeatures({data, countryId}));
         })
         .catch(error => {
             dispatch(receiveFeaturesErrors(error));
@@ -36,6 +37,7 @@ function FeaturedProducts() {
                 </ProductWrapper>
                 )
             })}
+            {/* <CategoryPage countryId={countryId.country}/> */}
         </FeatureWrapper>
     )
 }

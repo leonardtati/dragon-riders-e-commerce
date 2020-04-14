@@ -1,4 +1,5 @@
 const initialState = {
+    currentCountry: null,
     products: [],
     status: "loading",
   };
@@ -14,6 +15,7 @@ const initialState = {
           case "RECEIVE_COUNTRY_PRODUCTS": {
             return {
               ...state,
+              currentCountry: action.country,
               products: action.products,
               status: "idle",
             };
