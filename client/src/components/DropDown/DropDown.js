@@ -11,6 +11,8 @@ import {
   receiveCountries,
   receiveCountriesError,
 } from "../../actions";
+import CircularProgress from "@material-ui/core/CircularProgress"
+
 
 const DropDown = () => {
   const dispatch = useDispatch();
@@ -58,8 +60,10 @@ const DropDown = () => {
             )}
           </>
         ) : (
-          <div>LOADING</div>
-        )}
+          <CircularProgress /> 
+        )  
+
+        }
       </SelectContainer>
     </Wrapper>
   );

@@ -12,6 +12,7 @@ import CartPage from '../CartPage/CartPage'
 import ErrorPage from "../ErrorPage/ErrorPage";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,7 +32,7 @@ function App() {
             <Route path="/categories/:country">
               <CategoryPage />
             </Route>
-            <Route path="/products/detail/:productId">
+            <Route path="/detail/:productId">
               <ProductPage />
             </Route>
             <Route path="/cart/:order">
