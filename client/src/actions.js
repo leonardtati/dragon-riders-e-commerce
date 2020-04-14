@@ -1,5 +1,3 @@
-import { bindActionCreators } from "redux";
-
 //--------------Request Countries----------//
 
 export const requestCountries = () => ({
@@ -38,9 +36,12 @@ export const requestFeatures = () => ({
   type: "REQUEST_FEATURE_PRODUCTS"
 })
 
-export const receiveFeatures = (features) => ({
+export const receiveFeatures = ({data, countryId}) => ({
   type: "RECEIVE_FEATURE_PRODUCTS",
-  features,
+  payload: {
+    data,
+   countryId
+  }
 })
 
 export const receiveFeaturesErrors = () => ({
@@ -61,7 +62,22 @@ export const receiveCategoriesError = () => ({
   type: "RECEIVE_CATEGORIES_ERROR",
 })
 
-//--------------Add item to cart----------//
+//-----Request Category Products by Country-----------//
+
+export const requestCategoriesProducts = () => ({
+  type: "REQUEST_CATEGORY_PRODUCTS",
+})
+
+export const receiveCategoriesProducts = (categoryProducts) => ({
+  type: "RECEIVE_CATEGORY_PRODUCTS",
+  categoryProducts,
+})
+
+export const receiveCategoriesProductsError = () => ({
+  type: "ECEIVE_CATEGORY_PRODUCTS_ERROR"
+})
+
+//--------------Add item to cart--------------------//
 
 export const addProduct = (product) => ({
   type: "ADD_PRODUCT",
