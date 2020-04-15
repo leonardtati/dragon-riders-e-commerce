@@ -12,4 +12,6 @@ export default combineReducers({ country, category, product, feature, cart, cate
 
 
 
+const cart = cartReducer;
 
+export default combineReducers({ country, category, product, feature, cart });
