@@ -39,7 +39,7 @@ function FeaturedProducts() {
                             <ProductImage src={feature.imageSrc}></ProductImage>
                             <ProductName>{feature.name}</ProductName>
                             <ProductPrice>{feature.price}</ProductPrice>
-                            <button>Add To Cart</button>
+                            <button onClick={()=>dispatch(addProduct(feature))}>Add To Cart</button>
                         </ProductWrapper>
                     )
                 })}

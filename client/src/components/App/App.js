@@ -35,7 +35,7 @@ function App() {
             <Route path="/detail/:productId">
               <ProductPage />
             </Route>
-            <Route path="/cart/:order">
+            <Route path="/cart">
               <CartPage />
             </Route>
             <Route path="/error">

@@ -1,16 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-// import { useSelector } from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 // import { getItemArray, getSubtotal } from '../reducers';
-// import { formatPriceForHumans } from '../helpers';
-
-// import CartItem from './CartItem';
-// import Button from './Button';
 
 const Cart = () => {
-  // const items = useSelector(getItemArray);
-  // const subtotal = useSelector(getSubtotal);
+  const cartState = useSelector((state) => state.cart);
+
+  console.log("IN CART", cartState);
 
   return (
     <Wrapper>
@@ -21,14 +18,14 @@ const Cart = () => {
           <span>ITEM</span>
           <span>PRICE</span>
           <span></span>
-          <Qty>12
-          {/* {items.length} {items.length === 1 ? 'Item' : 'Items'} */}
+          <Qty>
+            12
+            {/* {items.length} {items.length === 1 ? 'Item' : 'Items'} */}
           </Qty>
 
-          <ItemList>Product I want to buy
-          {/* {items.map((item) => (
-            <CartItem key={item.id} item={item} />
-          ))} */}
+          <ItemList>
+            Product I want to buy
+            {}
           </ItemList>
           <Price>$120.99</Price>
           <button style={{ width: 50 }}>X</button>
@@ -40,7 +37,7 @@ const Cart = () => {
         </Total>
         <button style={{ width: 140 }}>Purchase</button>
       </Bottom>
-    </Wrapper >
+    </Wrapper>
   );
 };
 
