@@ -30,47 +30,45 @@ export const receiveCountryProductsError = () => ({
   type: "RECEIVE_COUNTRY_PRODUCTS_ERROR",
 });
 
-
 //-------------Request Feature Products by Country-----//
 
-
 export const requestFeatures = () => ({
-  type: "REQUEST_FEATURE_PRODUCTS"
-})
+  type: "REQUEST_FEATURE_PRODUCTS",
+});
 
 export const receiveFeatures = (features) => ({
   type: "RECEIVE_FEATURE_PRODUCTS",
   features,
-})
+});
 
 export const receiveFeaturesErrors = () => ({
   type: "RECEIVE_FEATURE_PRODUCTS_ERROR",
-})
+});
 //--------------Request Categories By Country----------//
 
 export const requestCategories = () => ({
   type: "REQUEST_CATEGORIES",
-})
+});
 
 export const receiveCategories = (categories) => ({
   type: "RECEIVE_CATEGORIES",
   categories,
-})
+});
 
 export const receiveCategoriesError = () => ({
   type: "RECEIVE_CATEGORIES_ERROR",
-})
+});
 
 //--------------Add item to cart----------//
 
-export const addProduct = (product) => ({
+export const addProduct = (feature) => ({
   type: "ADD_PRODUCT",
-  product,
+  feature,
 });
 
-export const removeItem = (productId) => ({
+export const removeItem = (featureId) => ({
   type: "REMOVE_ITEM",
-  productId,
+  featureId,
 });
 
 export const clearCart = () => ({
