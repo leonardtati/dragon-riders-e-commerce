@@ -1,38 +1,17 @@
 import React from "react";
 import { Icon } from "react-icons-kit";
 import { shoppingCart } from "react-icons-kit/feather/shoppingCart";
+import { getStoreProductArray } from "../../reducers/cart-reducer";
+
+import { NavLink } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 // import { getStoreProductsArray } from "../../reducers/cart-reducer";
 
-/*
-  {Object.keys(products[4]).length > 0 ? (
-        <NumProducts>{Object.keys(products[4]).length}</NumProducts>
-      ) : (
-        <></>
-      )}
-
-       const productQuantity = useSelector((state) => {
-    const productItems = Object.values(state.cart);
-    console.log("INCARTICON", productItems);
-    return productItems.reduce((acc, item) => {
-      return item.quantity + acc;
-    }, 0);
-  });
- <div>{productQuantity}</div>
- <div>{productQuantity}</div>
-
-*/
-
 const CartIcon = () => {
-  const feature = useSelector((state) => state.cart.feature);
-
-  //console.log("PRODUCTQUANTITY", productQuantity);
-  // const products = useSelector(getStoreProductsArray);
-
   const productQuantity = useSelector((state) => {
     const productItems = Object.values(state.cart);
     console.log("INCARTICON", productItems);
@@ -43,12 +22,14 @@ const CartIcon = () => {
 
   return (
     <>
-      <Icon icon={shoppingCart} size={30}></Icon>
-      {productQuantity > 0 ? (
-        <NumProducts>{productQuantity}</NumProducts>
-      ) : (
-        <></>
-      )}
+      <LinkToCart to={"/cart"}>
+        <Icon icon={shoppingCart} size={30}></Icon>
+        {productQuantity > 0 ? (
+          <NumProducts>{productQuantity}</NumProducts>
+        ) : (
+          <></>
+        )}
+      </LinkToCart>
     </>
   );
 };
@@ -62,6 +43,9 @@ const NumProducts = styled.div`
   border-radius: 50%;
   background-color: red;
   color: white;
+`;
+const LinkToCart = styled(NavLink)`
+  color: black;
 `;
 
 export default CartIcon;

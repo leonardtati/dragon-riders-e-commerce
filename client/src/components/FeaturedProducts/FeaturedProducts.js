@@ -19,8 +19,6 @@ function FeaturedProducts() {
   const dispatch = useDispatch();
   const [isloaded, setIsLoaded] = React.useState(false);
 
-  console.log("PRODUCTSTATEINFEATUREPRODUCTS");
-
   useEffect(() => {
     dispatch(requestFeatures());
     fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
@@ -41,14 +39,16 @@ function FeaturedProducts() {
       ) : (
         features.map((feature) => {
           return (
-            <ProductLink to={`/detail/${feature.id}`}>
-              <ProductWrapper>
+            <ProductWrapper>
+              <ProductLink to={`/detail/${feature.id}`}>
                 <ProductImage src={feature.imageSrc}></ProductImage>
                 <ProductName>{feature.name}</ProductName>
                 <ProductPrice>{feature.price}</ProductPrice>
-                <button>Add To Cart</button>
-              </ProductWrapper>
-            </ProductLink>
+                <button onClick={() => dispatch(addProduct(feature))}>
+                  Add To Cart
+                </button>
+              </ProductLink>
+            </ProductWrapper>
           );
         })
       )}
