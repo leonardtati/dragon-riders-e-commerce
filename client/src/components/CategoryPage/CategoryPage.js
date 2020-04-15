@@ -35,8 +35,14 @@ const CategoryPage = () => {
         <ProductName>{product.name}</ProductName>
         <ProductCategory>{product.price}</ProductCategory>
         <ProductPrice>{product.category}</ProductPrice>
-         <div>{product.numInStock}</div>
-          <button>Buy Now</button>
+     <ProductPrice>{product.numInStock <= 0 ? 
+          `We're Out of Stock! Come Back For This Shortly!` :
+          product.numInStock <= 5 && product.numInStock >= 2 ?
+          `There are only ${product.numInStock} item(s) left!` : 
+          product.numInStock <= 1 ?
+          `Only ${product.numInStock} left!` :
+          `Stock: ${product.numInStock}`}</ProductPrice>
+          <button>Add To Cart</button>
           </ProductWrapper>
     </ProductLink>
   
@@ -61,7 +67,8 @@ const ProductWrapper = styled.div`
     border-radius: 16px;
     box-shadow: 2px 5px 36px rgba(0, 0, 0, 0.1);
     text-align: center;
-`
+`;
+
 
 const ProductImage = styled.img`
   border-radius: 12px;
@@ -74,7 +81,7 @@ const ProductName = styled.h2`
   margin-top: 12px;
 `
 const ProductPrice = styled.div`
-    color: red;
+    color: #333;
 `
 const ProductCategory = styled.div`
   color: #333;
