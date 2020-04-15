@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { requestCategoriesProducts, receiveCategoriesProducts, receiveCategoriesProductsError} from '../../actions'
 import styled from "styled-components"
-import NavBar from '../NavBar/NavBar'
 
 const CategoryPage = () => {
 
@@ -11,14 +10,10 @@ const CategoryPage = () => {
   const productType = useParams();
   const categoryProducts = useSelector((state) => state.categoryProduct.categoryProducts)
   const categories = useSelector((state) => state.category.categories)
-  const countryList = useSelector((state) => state.country.countries);
   const currentCountry = useSelector((state) => state.feature.currentCountry)
-
-  console.log(currentCountry)
 
   useEffect(() => {
     dispatch(requestCategoriesProducts())
-    //ISSUE 1
     fetch(`/products/${currentCountry.replace(" ", "")}`)
     .then(res => res.json())
     .then(data => {
@@ -28,37 +23,72 @@ const CategoryPage = () => {
       dispatch(receiveCategoriesProductsError(error))
     })
   }, [categories])
-
   return (
-  <>
+  <FeatureWrapper>
   {categoryProducts.map(product => {
     if (productType.country === product.category){
-     //ISSUE 2
       return (
-   
-   <ProductWrapper>
-
-   <h2>{`Shop All Things ${product.category} here!`}</h2>
-   <img src={product.imageSrc}></img>
-   <div>{product.name}</div>
-   <div>{product.price}</div>
-   <div>{product.category}</div>
-   <button>Buy Now</button>
-
-   </ProductWrapper>
+    <>  
+    <ProductLink to={`/detail/${product.id}`}>
+    <ProductWrapper>
+        <ProductImage src={product.imageSrc}></ProductImage>
+        <ProductName>{product.name}</ProductName>
+        <ProductCategory>{product.price}</ProductCategory>
+        <ProductPrice>{product.category}</ProductPrice>
+          <button>Buy Now</button>
+          </ProductWrapper>
+    </ProductLink>
+  
+   </>
    )
     }
   })}
-  </>
+  </FeatureWrapper>
   
   );
 }
+
+const FeatureWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 30px;
+  margin: 32px 0;
+`
 
 const ProductWrapper = styled.div`
     padding: 36px;
     border-radius: 16px;
     box-shadow: 2px 5px 36px rgba(0, 0, 0, 0.1);
     text-align: center;
+`
+
+const ProductImage = styled.img`
+  border-radius: 12px;
+  width 60%;
+`
+
+const ProductName = styled.h2`
+  font-size: 24px;
+  color: #333;
+  margin-top: 12px;
+`
+const ProductPrice = styled.div`
+    color: red;
+`
+const ProductCategory = styled.div`
+  color: #333;
+  font-size: 18px;
+`
+
+
+const ProductLink = styled(Link)`
+  text-decoration: none;
+  transition: transform 250ms;
+
+  &:hover {
+    transform: scale(1.1);
+    transform-origin: center;
+  }
 `
 
 export default CategoryPage;

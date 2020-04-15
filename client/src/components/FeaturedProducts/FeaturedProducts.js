@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { requestFeatures, receiveFeatures, receiveFeaturesErrors } from '../../actions'
 import CircularProgress from "@material-ui/core/CircularProgress"
-// import CategoryPage from "../CategoryPage/CategoryPage"
-function FeaturedProducts() {
+
+const FeaturedProducts = () => {
 
     const features = useSelector((state) => state.feature.features);
     const status = useSelector((state) => state.feature.status);
     const countryId = useParams();
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(requestFeatures())
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
         .then(res => res.json())
         .then(data => {
-            console.log("DATE", data)
             dispatch(receiveFeatures({data, countryId}));
         })
         .catch(error => {
@@ -29,12 +27,14 @@ function FeaturedProducts() {
             {status === "loading" ? <CircularProgress /> :
             features.map(feature => {
                 return (
+                <ProductLink to={`/detail/${feature.id}`}>
                 <ProductWrapper>
                 <ProductImage src={feature.imageSrc}></ProductImage>
                 <ProductName>{feature.name}</ProductName>
                 <ProductPrice>{feature.price}</ProductPrice>
                 <button>Add To Cart</button>
                 </ProductWrapper>
+                </ProductLink>
                 )
             })}
             {/* <CategoryPage countryId={countryId.country}/> */}
@@ -48,6 +48,16 @@ const FeatureWrapper = styled.div`
     grid-gap: 32px;
     margin: 32px 0;
 `
+const ProductLink = styled(Link)`
+    text-decoration: none;
+    transition: transform 300ms;
+
+    &:hover {
+        transform: scale(1.05);
+        transform-origin: center;
+    }
+`
+
 
 const ProductWrapper = styled.div`
     padding: 36px;
