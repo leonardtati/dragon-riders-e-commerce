@@ -35,6 +35,7 @@ const CategoryPage = () => {
         <ProductName>{product.name}</ProductName>
         <ProductCategory>{product.price}</ProductCategory>
         <ProductPrice>{product.category}</ProductPrice>
+         <div>{product.numInStock}</div>
           <button>Buy Now</button>
           </ProductWrapper>
     </ProductLink>
