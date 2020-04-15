@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { requestFeatures, receiveFeatures, receiveFeaturesErrors, addProduct } from '../../actions'
 import CircularProgress from "@material-ui/core/CircularProgress"
-
-
-function FeaturedProducts({ id, name, price }) {
+// import CategoryPage from "../CategoryPage/CategoryPage"
+function FeaturedProducts() {
 
     const features = useSelector((state) => state.feature.features);
     const status = useSelector((state) => state.feature.status);
@@ -18,7 +17,8 @@ function FeaturedProducts({ id, name, price }) {
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
             .then(res => res.json())
             .then(data => {
-                dispatch(receiveFeatures(data.features));
+                console.log("DATE", data)
+                dispatch(receiveFeatures({ data, countryId }));
             })
             .catch(error => {
                 dispatch(receiveFeaturesErrors(error));
@@ -35,17 +35,11 @@ function FeaturedProducts({ id, name, price }) {
                             <ProductImage src={feature.imageSrc}></ProductImage>
                             <ProductName>{feature.name}</ProductName>
                             <ProductPrice>{feature.price}</ProductPrice>
-                            <button onClick={() => dispatch(addProduct(
-
-                                {
-                                    id,
-
-                                }
-                            ))}
-                            >Add To Cart</button>
+                            <button>Add To Cart</button>
                         </ProductWrapper>
                     )
                 })}
+            {/* <CategoryPage countryId={countryId.country}/> */}
         </FeatureWrapper>
     )
 }

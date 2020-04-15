@@ -2,14 +2,19 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestCategories, receiveCategories, receiveCategoriesError} from '../../actions';
+import CircularProgress from '@material-ui/core/CircularProgress'
+import CategoryPage from '../CategoryPage/CategoryPage';
+
+
 const NavBar = () => {
+
   const dispatch = useDispatch();
   const params = useParams();
   const categories = useSelector((state) => state.category.categories)
   const categoriesState = useSelector((state) => state.category.status)
+
   useEffect(() => {
     dispatch(requestCategories())
     fetch(`/categories/${params.country.replace(" ", "")}`)
@@ -26,7 +31,7 @@ const NavBar = () => {
   return (
   <>
   <NavContainer>
-    {categoriesState === "loading" ? <div>LOADING</div> :   
+    {categoriesState === "loading" ? <CircularProgress/> :   
     categories.map(category => {
       return (
         <StyledLink to={`/categories/${category}`}>{category}</StyledLink>
