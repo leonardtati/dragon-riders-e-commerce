@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { requestFeatures, receiveFeatures, receiveFeaturesErrors } from '../../actions'
+import { requestFeatures, receiveFeatures, receiveFeaturesErrors, addProduct } from '../../actions'
 import CircularProgress from "@material-ui/core/CircularProgress"
 // import CategoryPage from "../CategoryPage/CategoryPage"
 function FeaturedProducts() {
@@ -19,28 +19,30 @@ function FeaturedProducts() {
     useEffect(() => {
         dispatch(requestFeatures())
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
-        .then(res => res.json())
-        .then(data => {
-            console.log("DATE", data)
-            dispatch(receiveFeatures({data, countryId}));
-        })
-        .catch(error => {
-            dispatch(receiveFeaturesErrors(error));
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("DATE", data)
+                dispatch(receiveFeatures({ data, countryId }));
+            })
+            .catch(error => {
+                dispatch(receiveFeaturesErrors(error));
+            })
     }, [])
+    console.log('addProduct', addProduct)
     return (
+
         <FeatureWrapper>
             {status === "loading" ? <CircularProgress /> :
-            features.map(feature => {
-                return (
-                <ProductWrapper>
-                <ProductImage src={feature.imageSrc}></ProductImage>
-                <ProductName>{feature.name}</ProductName>
-                <ProductPrice>{feature.price}</ProductPrice>
-                <button>Add To Cart</button>
-                </ProductWrapper>
-                )
-            })}
+                features.map(feature => {
+                    return (
+                        <ProductWrapper>
+                            <ProductImage src={feature.imageSrc}></ProductImage>
+                            <ProductName>{feature.name}</ProductName>
+                            <ProductPrice>{feature.price}</ProductPrice>
+                            <button>Add To Cart</button>
+                        </ProductWrapper>
+                    )
+                })}
             {/* <CategoryPage countryId={countryId.country}/> */}
         </FeatureWrapper>
     )

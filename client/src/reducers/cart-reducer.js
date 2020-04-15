@@ -27,6 +27,5 @@ export function cartReducer(state = initialState, action) {
   }
 }
 
-export const getStoreProductsArray = (state) => {
-  return Object.values(state);
-};
+export const getStoreProductArray = (state) => Object.values(state);
+

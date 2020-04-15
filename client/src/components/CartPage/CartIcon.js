@@ -1,6 +1,9 @@
 import React from "react";
 import { Icon } from "react-icons-kit";
 import { shoppingCart } from "react-icons-kit/feather/shoppingCart";
+import { getStoreProductArray } from '../../reducers/cart-reducer';
+import { useSelector } from 'react-redux';
+
 
 import styled from "styled-components";
 
@@ -28,6 +31,7 @@ import { getStoreProductsArray } from "../../reducers/cart-reducer";
 */
 
 const CartIcon = () => {
+
   const feature = useSelector((state) => state.cart.feature);
 
   //console.log("PRODUCTQUANTITY", productQuantity);
