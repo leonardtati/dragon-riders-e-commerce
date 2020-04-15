@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import ErrorPage from "../ErrorPage/ErrorPage"
+import ErrorPage from "../ErrorPage/ErrorPage";
 import {
   requestCountries,
   receiveCountries,
   receiveCountriesError,
 } from "../../actions";
-import CircularProgress from "@material-ui/core/CircularProgress"
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const DropDown = () => {
   const dispatch = useDispatch();
@@ -60,10 +59,8 @@ const DropDown = () => {
             )}
           </>
         ) : (
-          <CircularProgress /> 
-        )  
-
-        }
+          <CircularProgress />
+        )}
       </SelectContainer>
     </Wrapper>
   );
