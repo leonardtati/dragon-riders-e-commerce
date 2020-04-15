@@ -7,13 +7,15 @@ export default function cartReducer(state = initialState, action) {
                 ...state,
                 [action.product.id]: {
                     ...action.product,
-                    quantity: state[action.product.id] && state[action.product.id].quantity ? state[action.product.id].quantity + 1 : 1,
+                    quantity: state[action.product.id] &&
+                        state[action.product.id].quantity ?
+                        state[action.product.id].quantity + 1 : 1,
                 },
             };
         }
         case "REMOVE_ITEM": {
             const newCart = { ...state };
-            delete newCart[action.product.id];
+            delete newCart[action.productId.id];
             return newCart;
         }
         case "CLEAR_CART": {
@@ -23,3 +25,5 @@ export default function cartReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const getStoreProductArray = (state) => Object.values(state);

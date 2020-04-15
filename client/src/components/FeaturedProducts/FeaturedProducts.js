@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { requestFeatures, receiveFeatures, receiveFeaturesErrors } from '../../actions'
+import { requestFeatures, receiveFeatures, receiveFeaturesErrors, addProduct } from '../../actions'
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-function FeaturedProducts() {
+
+function FeaturedProducts({ id, name, price }) {
 
     const features = useSelector((state) => state.feature.features);
     const status = useSelector((state) => state.feature.status);
@@ -15,27 +16,36 @@ function FeaturedProducts() {
     useEffect(() => {
         dispatch(requestFeatures())
         fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
-        .then(res => res.json())
-        .then(data => {
-            dispatch(receiveFeatures(data.features));
-        })
-        .catch(error => {
-            dispatch(receiveFeaturesErrors(error));
-        })
+            .then(res => res.json())
+            .then(data => {
+                dispatch(receiveFeatures(data.features));
+            })
+            .catch(error => {
+                dispatch(receiveFeaturesErrors(error));
+            })
     }, [])
+    console.log('addProduct', addProduct)
     return (
+
         <FeatureWrapper>
             {status === "loading" ? <CircularProgress /> :
-            features.map(feature => {
-                return (
-                <ProductWrapper>
-                <ProductImage src={feature.imageSrc}></ProductImage>
-                <ProductName>{feature.name}</ProductName>
-                <ProductPrice>{feature.price}</ProductPrice>
-                <button>Add To Cart</button>
-                </ProductWrapper>
-                )
-            })}
+                features.map(feature => {
+                    return (
+                        <ProductWrapper>
+                            <ProductImage src={feature.imageSrc}></ProductImage>
+                            <ProductName>{feature.name}</ProductName>
+                            <ProductPrice>{feature.price}</ProductPrice>
+                            <button onClick={() => dispatch(addProduct(
+
+                                {
+                                    id,
+
+                                }
+                            ))}
+                            >Add To Cart</button>
+                        </ProductWrapper>
+                    )
+                })}
         </FeatureWrapper>
     )
 }

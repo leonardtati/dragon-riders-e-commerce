@@ -67,7 +67,7 @@ export const addProduct = (product) => ({
   type: "ADD_PRODUCT",
   product,
 });
-
+console.log('ADD_PRODUCT', addProduct)
 export const removeItem = (productId) => ({
   type: "REMOVE_ITEM",
   productId,
