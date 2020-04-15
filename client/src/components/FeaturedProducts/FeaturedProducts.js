@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { requestFeatures, receiveFeatures, receiveFeaturesErrors, addProduct } from '../../actions'
-import CircularProgress from "@material-ui/core/CircularProgress"
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  requestFeatures,
+  receiveFeatures,
+  receiveFeaturesErrors,
+  addProduct,
+} from "../../actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 // import CategoryPage from "../CategoryPage/CategoryPage"
 function FeaturedProducts() {
   const features = useSelector((state) => state.feature.features);
@@ -14,38 +19,42 @@ function FeaturedProducts() {
   const dispatch = useDispatch();
   const [isloaded, setIsLoaded] = React.useState(false);
 
-  console.log("PRODUCTSTATEINFEATUREPRODUCTS");
-
-    useEffect(() => {
-        dispatch(requestFeatures())
-        fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
-            .then(res => res.json())
-            .then(data => {
-                console.log("DATE", data)
-                dispatch(receiveFeatures({ data, countryId }));
-            })
-            .catch(error => {
-                dispatch(receiveFeaturesErrors(error));
-            })
-    }, [])
-    console.log('addProduct', addProduct)
-    return (
-
-        <FeatureWrapper>
-            {status === "loading" ? <CircularProgress /> :
-                features.map(feature => {
-                    return (
-                        <ProductWrapper>
-                            <ProductImage src={feature.imageSrc}></ProductImage>
-                            <ProductName>{feature.name}</ProductName>
-                            <ProductPrice>{feature.price}</ProductPrice>
-                            <button onClick={()=>dispatch(addProduct(feature))}>Add To Cart</button>
-                        </ProductWrapper>
-                    )
-                })}
-            {/* <CategoryPage countryId={countryId.country}/> */}
-        </FeatureWrapper>
-    )
+  useEffect(() => {
+    dispatch(requestFeatures());
+    fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("DATE", data);
+        dispatch(receiveFeatures({ data, countryId }));
+      })
+      .catch((error) => {
+        dispatch(receiveFeaturesErrors(error));
+      });
+  }, []);
+  console.log("addProduct", addProduct);
+  return (
+    <FeatureWrapper>
+      {status === "loading" ? (
+        <CircularProgress />
+      ) : (
+        features.map((feature) => {
+          return (
+            <ProductWrapper>
+              <ProductLink to={`/detail/${feature.id}`}>
+                <ProductImage src={feature.imageSrc}></ProductImage>
+                <ProductName>{feature.name}</ProductName>
+                <ProductPrice>{feature.price}</ProductPrice>
+                <button onClick={() => dispatch(addProduct(feature))}>
+                  Add To Cart
+                </button>
+              </ProductLink>
+            </ProductWrapper>
+          );
+        })
+      )}
+      {/* <CategoryPage countryId={countryId.country}/> */}
+    </FeatureWrapper>
+  );
 }
 
 const FeatureWrapper = styled.div`
@@ -53,6 +62,15 @@ const FeatureWrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 32px;
   margin: 32px 0;
+`;
+const ProductLink = styled(Link)`
+  text-decoration: none;
+  transition: transform 300ms;
+
+  &:hover {
+    transform: scale(1.05);
+    transform-origin: center;
+  }
 `;
 
 const ProductWrapper = styled.div`

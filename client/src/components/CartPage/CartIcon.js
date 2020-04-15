@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 import { useSelector } from "react-redux";
 
-import { getStoreProductsArray } from "../../reducers/cart-reducer";
+// import { getStoreProductsArray } from "../../reducers/cart-reducer";
 
 const CartIcon = () => {
   const productQuantity = useSelector((state) => {

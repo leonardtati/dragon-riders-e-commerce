@@ -14,7 +14,6 @@ export default function featureReducer( state = initialState, action ){
             };
         }
         case "RECEIVE_FEATURE_PRODUCTS": {
-            console.log(action.payload)
             return {
                 ...state,
                 features: action.payload.data.features,
