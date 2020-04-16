@@ -24,30 +24,41 @@ function FeaturedProducts() {
     fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("DATE", data);
         dispatch(receiveFeatures({ data, countryId }));
       })
       .catch((error) => {
         dispatch(receiveFeaturesErrors(error));
       });
   }, []);
-  console.log("addProduct", addProduct);
   return (
     <FeatureWrapper>
       {status === "loading" ? (
         <CircularProgress />
       ) : (
         features.map((feature) => {
+          const inStock = feature.numInStock <= 0;
           return (
             <ProductWrapper>
               <ProductLink to={`/detail/${feature.id}`}>
                 <ProductImage src={feature.imageSrc}></ProductImage>
                 <ProductName>{feature.name}</ProductName>
                 <ProductPrice>{feature.price}</ProductPrice>
-                <button onClick={() => dispatch(addProduct(feature))}>
-                  Add To Cart
-                </button>
               </ProductLink>
+              <ProductStock>
+                {inStock
+                  ? `We're Out of Stock! Come Back For This Shortly!`
+                  : feature.numInStock <= 5 && feature.numInStock >= 2
+                  ? `There are only ${feature.numInStock} item(s) left!`
+                  : feature.numInStock <= 1
+                  ? `Only ${feature.numInStock} left!`
+                  : `Stock: ${feature.numInStock}`}
+              </ProductStock>
+              <Button
+                disabled={inStock}
+                onClick={() => dispatch(addProduct(feature))}
+              >
+                Add To Cart
+              </Button>
             </ProductWrapper>
           );
         })
@@ -80,6 +91,11 @@ const ProductWrapper = styled.div`
   text-align: center;
 `;
 
+const ProductStock = styled.div`
+  color: #333;
+  font-size: 18px;
+`;
+
 const ProductImage = styled.img`
   border-radius: 12px;
   width: 80%;
@@ -93,5 +109,17 @@ const ProductName = styled.h3`
 const ProductPrice = styled.div`
   color: red;
 `;
+
+const Button = styled.button`
+  background-color: #048BA9;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  &: disabled {
+    background-color: grey;
+  }
+}`;
 
 export default FeaturedProducts;
