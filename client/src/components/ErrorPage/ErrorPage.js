@@ -16,7 +16,9 @@ const ErrorPage = () => {
 
 const Wrapper = styled.div`
   padding-bottom: 24px;
+  width: 100%;
   height: 100vh;
+  grid-column: 5 span/6;
   background-image: url("/error_page.png");
   background-size: cover;
 `;
