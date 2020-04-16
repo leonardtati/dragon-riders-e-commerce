@@ -34,13 +34,13 @@ export const requestFeatures = () => ({
   type: "REQUEST_FEATURE_PRODUCTS",
 });
 
-export const receiveFeatures = ({data, countryId}) => ({
+export const receiveFeatures = ({ data, countryId }) => ({
   type: "RECEIVE_FEATURE_PRODUCTS",
   payload: {
     data,
-   countryId
-  }
-})
+    countryId,
+  },
+});
 
 export const receiveFeaturesErrors = () => ({
   type: "RECEIVE_FEATURE_PRODUCTS_ERROR",
@@ -64,16 +64,16 @@ export const receiveCategoriesError = () => ({
 
 export const requestCategoriesProducts = () => ({
   type: "REQUEST_CATEGORY_PRODUCTS",
-})
+});
 
 export const receiveCategoriesProducts = (categoryProducts) => ({
   type: "RECEIVE_CATEGORY_PRODUCTS",
   categoryProducts,
-})
+});
 
 export const receiveCategoriesProductsError = () => ({
-  type: "ECEIVE_CATEGORY_PRODUCTS_ERROR"
-})
+  type: "ECEIVE_CATEGORY_PRODUCTS_ERROR",
+});
 
 //--------------Add item to cart--------------------//
 
@@ -82,9 +82,15 @@ export const addProduct = (feature) => ({
   feature,
 });
 
-export const removeItem = (featureId) => ({
-  type: "REMOVE_ITEM",
-  featureId,
+export const removeProduct = (feature) => ({
+  type: "REMOVE_PRODUCT",
+  feature,
+});
+
+export const updateProduct = (feature, newQuantity) => ({
+  type: "UPDATE_PRODUCT",
+  feature,
+  newQuantity,
 });
 
 export const clearCart = () => ({

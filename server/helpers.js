@@ -1,5 +1,5 @@
 const MAX_DELAY = 2000;
-const FAILURE_ODDS = 0.1;
+const FAILURE_ODDS = 0;
 
 const simulateProblems = (res, data) => {
   const delay = Math.random() * MAX_DELAY;

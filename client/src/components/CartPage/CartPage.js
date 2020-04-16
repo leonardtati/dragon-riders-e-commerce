@@ -1,13 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-// import { getItemArray, getSubtotal } from '../reducers';
+import { removeProduct, updateProduct } from "../../actions";
+import { formatPriceForHumans } from "../../helpers";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
+  const cartStateArray = Object.values(cartState);
+  const subtotal = useSelector((state) => {
+    const itemsPrice = Object.values(state.cart);
+    return itemsPrice.reduce((acc, item) => {
+      return item.price * item.quantity + acc;
+    }, 0);
+  });
 
-  console.log("IN CART", cartState);
+  console.log("IN CART");
 
   return (
     <Wrapper>
@@ -34,7 +43,7 @@ const Cart = () => {
       </Top>
       <Bottom>
         <Total>
-          Total: <strong>total</strong>
+          Total: <strong>{formatPriceForHumans(subtotal)}</strong>
         </Total>
         <button style={{ width: 140 }}>Purchase</button>
       </Bottom>

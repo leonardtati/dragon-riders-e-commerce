@@ -14,7 +14,6 @@ import { useSelector } from "react-redux";
 const CartIcon = () => {
   const productQuantity = useSelector((state) => {
     const productItems = Object.values(state.cart);
-    console.log("INCARTICON", productItems);
     return productItems.reduce((acc, item) => {
       return item.quantity + acc;
     }, 0);
