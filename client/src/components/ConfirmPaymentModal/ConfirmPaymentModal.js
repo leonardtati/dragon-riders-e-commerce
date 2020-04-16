@@ -15,64 +15,62 @@ import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
 
+
 function ConfirmPaymentModal(props) {
+    const order = props.cartStateArray.map((item) => {
+        return { itemId: item.id, quantity: item.quantity }
+    })
+
+
+    console.log('order', order);
+    console.log('props', props);
     // const classes = useStyles();
-    const { onClose, selectedValue, open } = props;
+    const { open } = props;
 
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
+    const handleSubmit = ev => {
+        ev.preventDefault();
 
-    // const handleListItemClick = (value) => {
-    //     onClose(value);
-    // };
+        fetch("/order", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
 
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    console.log("HERE!", json);
+
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <DialogTitle id="simple-dialog-title">Credit card information</DialogTitle>
-            <input
-                variant="outlined"
-                label="Credit card"
-                type="text"
-                value="{creditCard}"
-                // onChange={ev => setCreditCard(ev.currentTarget.value)}
-                style={{ flex: 2 }}
-            />
-            {/* <Spacer size={16} /> */}
 
+        <Dialog aria-labelledby="simple-dialog-title" open={open}>
+            <form
+                onSubmit={ev => {
+                    handleSubmit(ev)
+
+                }}
+
+            >
+                <input
+                    variant="outlined"
+                    label="Credit card"
+                    type="text"
+                    value="{creditCard}"
+                    // onChange={ev => setCreditCard(ev.currentTarget.value)}
+                    style={{ flex: 2 }}
+                /></form>
         </Dialog>
     );
 }
 
-ConfirmPayment.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
-};
-
-function ConfirmPayment() {
-    const [open, setOpen] = React.useState(false);
-    // const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (value) => {
-        setOpen(false);
-        // setSelectedValue(value);
-    };
-
-    return (
-        <div>
-            <Typography variant="subtitle1">Purchased:</Typography>
-            <br />
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Confirm payment
-      </Button>
-            <Dialog open={open} onClose={handleClose} />
-        </div>
-    );
-}
 
 export default ConfirmPaymentModal;
