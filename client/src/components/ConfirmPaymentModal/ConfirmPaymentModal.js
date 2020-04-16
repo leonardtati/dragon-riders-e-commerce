@@ -14,11 +14,11 @@ import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
-
+// body: JSON.stringify({ order_summary: order }),
 
 function ConfirmPaymentModal(props) {
     const order = props.cartStateArray.map((item) => {
-        return { itemId: item.id, quantity: item.quantity }
+        return { 'item_id': item.id, quantity: item.quantity }
     })
 
 
@@ -36,18 +36,15 @@ function ConfirmPaymentModal(props) {
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-
+                order_summary: order
             })
         })
             .then(res => res.json())
             .then(json => {
-                if (json.success) {
-                    console.log("HERE!", json);
-
-                }
+                console.log('json', json);
             })
             .catch(err => {
-                console.error(err);
+                console.log('message', err.message);
             });
     }
     return (
@@ -63,8 +60,8 @@ function ConfirmPaymentModal(props) {
                 <input
                     variant="outlined"
                     label="Credit card"
-                    type="text"
-                    value="{creditCard}"
+                    type="submit"
+                    value="CONFIRM"
                     // onChange={ev => setCreditCard(ev.currentTarget.value)}
                     style={{ flex: 2 }}
                 /></form>
