@@ -94,28 +94,38 @@ express()
 
   .get("/countries/:country/featuredproducts", (req, res) => {
     const { country } = req.params;
-    const companiesIdByCountry = companyData
-      .map((company) => {
-        if (
-          company.country.replace(" ", "").toLowerCase() ===
-          country.toLowerCase()
-        ) {
-          return company.id;
-        }
-      })
-      .filter((id) => id !== undefined);
-    const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
-        return product.companyId === id;
+
+    const countryList = getCountryList().map((country) => {
+      return country.toLowerCase();
+    });
+    if (countryList.includes(country.toLowerCase())) {
+      const companiesIdByCountry = companyData
+        .map((company) => {
+          if (
+            company.country.replace(" ", "").toLowerCase() ===
+            country.toLowerCase()
+          ) {
+            return company.id;
+          }
+        })
+        .filter((id) => id !== undefined);
+      const productsByCountry = companiesIdByCountry.map((id) => {
+        return productData.filter((product) => {
+          return product.companyId === id;
+        });
       });
-    });
-    const lowestPrices = _.flatten(productsByCountry).filter((product) => {
-      if (product.numInStock > 0) {
-        let newPrice = product.price.slice(1);
-        return parseFloat(newPrice) < 20;
-      }
-    });
-    return simulateProblems(res, { features: lowestPrices });
+      const lowestPrices = _.flatten(productsByCountry).filter((product) => {
+        if (product.numInStock > 0) {
+          let newPrice = product.price.slice(1);
+          return parseFloat(newPrice) < 20;
+        }
+      });
+      return simulateProblems(res, { features: lowestPrices });
+    } else {
+      res.status(404).send({
+        error: `We either don't sell in that country or we couldn't find what you're looking for.`,
+      });
+    }
   })
 
   //Order-Form Validation
@@ -149,27 +159,38 @@ express()
 
   .get("/categories/:country", (req, res) => {
     const { country } = req.params;
-    const companiesIdByCountry = companyData
-      .map((company) => {
-        if (
-          company.country.replace(" ", "").toLowerCase() ===
-          country.toLowerCase()
-        ) {
-          return company.id;
-        }
-      })
-      .filter((id) => id !== undefined);
-    const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
-        return product.companyId === id;
+    const countryList = getCountryList().map((country) => {
+      return country.toLowerCase();
+    });
+    if (countryList.includes(country.toLowerCase())) {
+      const companiesIdByCountry = companyData
+        .map((company) => {
+          if (
+            company.country.replace(" ", "").toLowerCase() ===
+            country.toLowerCase()
+          ) {
+            return company.id;
+          }
+        })
+        .filter((id) => id !== undefined);
+      const productsByCountry = companiesIdByCountry.map((id) => {
+        return productData.filter((product) => {
+          return product.companyId === id;
+        });
       });
-    });
-    const productsByCategories = _.flatten(productsByCountry).map((product) => {
-      return product.category;
-    });
-    return simulateProblems(res, {
-      categories: Array.from(new Set(productsByCategories)),
-    });
+      const productsByCategories = _.flatten(productsByCountry).map(
+        (product) => {
+          return product.category;
+        }
+      );
+      return simulateProblems(res, {
+        categories: Array.from(new Set(productsByCategories)),
+      });
+    } else {
+      res.status(404).send({
+        error: `We either don't sell in that country or we couldn't find what you're looking for.`,
+      });
+    }
   })
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
