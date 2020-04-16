@@ -21,7 +21,11 @@ const CategoryPage = () => {
   const currentCountry = useSelector((state) => state.feature.currentCountry);
 
   useEffect(() => {
+    if (currentCountry === null) {
+      console.log("x");
+    }
     dispatch(requestCategoriesProducts());
+    //the issue is: on refresh, the params change and I cannot find "current country"
     fetch(`/products/${currentCountry.replace(" ", "")}`)
       .then((res) => res.json())
       .then((data) => {
@@ -30,10 +34,13 @@ const CategoryPage = () => {
       .catch((error) => {
         dispatch(receiveCategoriesProductsError(error));
       });
-  }, [categories]);
+  }, []);
+
+  console.log("this is the issue", currentCountry);
+
   return (
     <FeatureWrapper>
-      {status === "loading" ? (
+      {status === "loading" || currentCountry === null ? (
         <LinearProgress variant="determinate" />
       ) : (
         categoryProducts.map((product) => {
