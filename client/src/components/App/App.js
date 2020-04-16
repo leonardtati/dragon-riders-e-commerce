@@ -26,7 +26,6 @@ function App() {
       })
       .filter((status) => status === "error");
   });
-  console.log("ISERROR", isError);
 
   return (
     <BrowserRouter>
