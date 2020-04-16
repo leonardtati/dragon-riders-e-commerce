@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   requestCategoriesProducts,
   receiveCategoriesProducts,
   receiveCategoriesProductsError,
+  addProduct,
 } from "../../actions";
 import styled from "styled-components";
+import { LinearProgress } from "@material-ui/core";
 
 const CategoryPage = () => {
   const dispatch = useDispatch();
@@ -14,12 +16,16 @@ const CategoryPage = () => {
   const categoryProducts = useSelector(
     (state) => state.categoryProduct.categoryProducts
   );
+  const state = useSelector((state) => state.categoryProduct.status);
   const categories = useSelector((state) => state.category.categories);
   const currentCountry = useSelector((state) => state.feature.currentCountry);
-
   useEffect(() => {
+    if (currentCountry === null) {
+      console.log("x");
+    }
     dispatch(requestCategoriesProducts());
-    fetch(`/products/${currentCountry.replace(" ", "")}`)
+    //the issue is: on refresh, the params change and I cannot find "current country"
+    fetch(`/products/${currentCountry}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(receiveCategoriesProducts(data.products));
@@ -30,32 +36,44 @@ const CategoryPage = () => {
   }, [categories]);
   return (
     <FeatureWrapper>
-      {categoryProducts.map((product) => {
-        if (productType.country === product.category) {
-          return (
-            <>
-              <ProductLink to={`/detail/${product.id}`}>
-                <ProductWrapper>
-                  <ProductImage src={product.imageSrc}></ProductImage>
-                  <ProductName>{product.name}</ProductName>
-                  <ProductCategory>{product.price}</ProductCategory>
-                  <ProductPrice>{product.category}</ProductPrice>
-                  <ProductPrice>
-                    {product.numInStock <= 0
-                      ? `We're Out of Stock! Come Back For This Shortly!`
-                      : product.numInStock <= 5 && product.numInStock >= 2
-                      ? `There are only ${product.numInStock} item(s) left!`
-                      : product.numInStock <= 1
-                      ? `Only ${product.numInStock} left!`
-                      : `Stock: ${product.numInStock}`}
-                  </ProductPrice>
-                  <button>Add To Cart</button>
-                </ProductWrapper>
-              </ProductLink>
-            </>
-          );
-        }
-      })}
+      {state === "loading" ||
+      categoryProducts === undefined ||
+      currentCountry === null ? (
+        <LinearProgress variant="determinate" />
+      ) : (
+        categoryProducts.map((product) => {
+          const inStock = product.numInStock <= 0;
+          if (productType.country === product.category) {
+            return (
+              <>
+                <ProductLink to={`/detail/${product.id}`}>
+                  <ProductWrapper>
+                    <ProductImage src={product.imageSrc}></ProductImage>
+                    <ProductName>{product.name}</ProductName>
+                    <ProductCategory>{product.price}</ProductCategory>
+                    <ProductPrice>{product.category}</ProductPrice>
+                    <ProductPrice>
+                      {inStock
+                        ? `We're Out of Stock! Come Back For This Shortly!`
+                        : product.numInStock <= 5 && product.numInStock >= 2
+                        ? `There are only ${product.numInStock} item(s) left!`
+                        : product.numInStock <= 1
+                        ? `Only ${product.numInStock} left!`
+                        : `Stock: ${product.numInStock}`}
+                    </ProductPrice>
+                    <Button
+                      disabled={inStock}
+                      onClick={() => dispatch(addProduct(product))}
+                    >
+                      Add To Cart{" "}
+                    </Button>
+                  </ProductWrapper>
+                </ProductLink>
+              </>
+            );
+          }
+        })
+      )}
     </FeatureWrapper>
   );
 };
@@ -92,14 +110,21 @@ const ProductCategory = styled.div`
   font-size: 18px;
 `;
 
+const Button = styled.button`
+  background-color: #048BA9;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  &: disabled {
+    background-color: grey;
+  }
+}`;
+
 const ProductLink = styled(Link)`
   text-decoration: none;
   transition: transform 250ms;
-
-  &:hover {
-    transform: scale(1.1);
-    transform-origin: center;
-  }
 `;
 
 export default CategoryPage;

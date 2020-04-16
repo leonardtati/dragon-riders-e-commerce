@@ -5,6 +5,7 @@ import FeaturedProducts from "../FeaturedProducts/FeaturedProducts";
 
 const MainPage = () => {
   return (
+
     <Wrapper>
       <NavBar />
       <BgWrapper>
@@ -67,5 +68,6 @@ const FeaturedProductsLabel = styled.div`
   }
   margin-left: 20px;
 `;
+
 
 export default MainPage;

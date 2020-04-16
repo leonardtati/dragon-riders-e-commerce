@@ -96,3 +96,8 @@ export const updateProduct = (feature, newQuantity) => ({
 export const clearCart = () => ({
   type: "CLEAR_CART",
 });
+
+//value={item.quantity}
+//onChange={(ev) =>
+// dispatch(updateProduct(item, ev.target.value))
+//}
