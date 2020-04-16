@@ -16,4 +16,12 @@ const simulateProblems = (res, data) => {
   }, delay);
 };
 
+const getCountryList = () => {
+  const countryList = companyData.map((country) => {
+    return country.country;
+  });
+  const uniqueCountries = Array.from(new Set(countryList));
+  return uniqueCountries;
+};
+
 module.exports = { simulateProblems };
