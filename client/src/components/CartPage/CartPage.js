@@ -1,39 +1,57 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-// import { getItemArray, getSubtotal } from '../reducers';
+import { removeProduct, updateProduct } from "../../actions";
+import { formatPriceForHumans } from "../../helpers";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
+  const cartStateArray = Object.values(cartState);
+  const subtotal = useSelector((state) => {
+    const itemsPrice = Object.values(state.cart);
+    return itemsPrice.reduce((acc, item) => {
+      return item.price * item.quantity + acc;
+    }, 0);
+  });
 
-  console.log("IN CART", cartState);
+  console.log("IN CART");
 
   return (
     <Wrapper>
       <Top>
         <Title>Your Cart</Title>
-        <Subtitle>
-          <span>QTY</span>
-          <span>ITEM</span>
-          <span>PRICE</span>
-          <span></span>
-          <Qty>
-            12
-            {/* {items.length} {items.length === 1 ? 'Item' : 'Items'} */}
-          </Qty>
+        <span>QTY</span>
+        <span>ITEM</span>
+        <span>PRICE</span>
+        <span></span>
 
-          <ItemList>
-            Product I want to buy
-            {}
-          </ItemList>
-          <Price>$120.99</Price>
-          <button style={{ width: 50 }}>X</button>
-        </Subtitle>
+        {cartStateArray.map((item) => {
+          return (
+            <Subtitle>
+              <Qty
+                value={item.quantity}
+                onChange={(ev) =>
+                  dispatch(updateProduct(item.id, ev.target.value))
+                }
+              ></Qty>
+
+              <ItemList>{item.name}</ItemList>
+              <Price>{item.price}</Price>
+              <button
+                style={{ width: 50 }}
+                onClick={() => dispatch(removeProduct(item.id))}
+              >
+                X
+              </button>
+            </Subtitle>
+          );
+        })}
       </Top>
       <Bottom>
         <Total>
-          Total: <strong>total</strong>
+          Total: <strong>{formatPriceForHumans(subtotal)}</strong>
         </Total>
         <button style={{ width: 140 }}>Purchase</button>
       </Bottom>
@@ -99,12 +117,14 @@ const Subtitle = styled.div`
   /* opacity: 0.75; */
 `;
 
-const Qty = styled.ul`
+const Qty = styled.input`
   margin: 0;
   margin-top: 8px;
   font-size: 16px;
   background-color: orange;
   width: 100px;
+  border: none;
+  text-align: center;
   /* opacity: 0.75; */
 `;
 
