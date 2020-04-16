@@ -1,3 +1,5 @@
+const companyData = require("./data/companies.json");
+
 const MAX_DELAY = 2000;
 const FAILURE_ODDS = 0;
 
@@ -24,4 +26,4 @@ const getCountryList = () => {
   return uniqueCountries;
 };
 
-module.exports = { simulateProblems };
+module.exports = { simulateProblems, getCountryList };

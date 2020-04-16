@@ -48,25 +48,34 @@ express()
   })
 
   //----Gets the Products by each country----//
-
   .get("/products/:country", (req, res) => {
     const { country } = req.params;
-    const companiesIdByCountry = companyData
-      .map((company) => {
-        if (
-          company.country.replace(" ", "").toLowerCase() ===
-          country.toLowerCase()
-        ) {
-          return company.id;
-        }
-      })
-      .filter((id) => id !== undefined);
-    const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
-        return product.companyId === id;
-      });
+    const countryList = getCountryList().map((country) => {
+      return country.toLowerCase();
     });
-    return simulateProblems(res, { products: _.flatten(productsByCountry) });
+
+    if (countryList.includes(country.toLowerCase())) {
+      const companiesIdByCountry = companyData
+        .map((company) => {
+          if (
+            company.country.replace(" ", "").toLowerCase() ===
+            country.replace(" ", "").toLowerCase()
+          ) {
+            return company.id;
+          }
+        })
+        .filter((id) => id !== undefined);
+      const productsByCountry = companiesIdByCountry.map((id) => {
+        return productData.filter((product) => {
+          return product.companyId === id;
+        });
+      });
+      return simulateProblems(res, { products: _.flatten(productsByCountry) });
+    } else {
+      res.status(404).send({
+        error: `We either don't sell in that country or we couldn't find what you're looking for.`,
+      });
+    }
   })
 
   .get("/products/detail/:productId", (req, res) => {
