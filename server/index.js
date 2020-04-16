@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const companyData = require("./data/companies.json");
 const productData = require("./data/items.json");
 const _ = require("lodash");
-const { simulateProblems } = require("./helpers.js");
+const { simulateProblems, getCountryList } = require("./helpers.js");
 const PORT = 4000;
 express()
   .use(function (req, res, next) {
@@ -31,11 +31,7 @@ express()
   //---Gets Country List in an Array---//
 
   .get("/countries", (req, res) => {
-    const countryList = companyData.map((country) => {
-      return country.country;
-    });
-    const uniqueCountries = Array.from(new Set(countryList));
-
+    const uniqueCountries = getCountryList();
     res.status(200).send({ countries: uniqueCountries });
   })
 
@@ -52,25 +48,34 @@ express()
   })
 
   //----Gets the Products by each country----//
-
   .get("/products/:country", (req, res) => {
     const { country } = req.params;
-    const companiesIdByCountry = companyData
-      .map((company) => {
-        if (
-          company.country.replace(" ", "").toLowerCase() ===
-          country.toLowerCase()
-        ) {
-          return company.id;
-        }
-      })
-      .filter((id) => id !== undefined);
-    const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
-        return product.companyId === id;
-      });
+    const countryList = getCountryList().map((country) => {
+      return country.toLowerCase();
     });
-    return simulateProblems(res, { products: _.flatten(productsByCountry) });
+
+    if (countryList.includes(country.toLowerCase())) {
+      const companiesIdByCountry = companyData
+        .map((company) => {
+          if (
+            company.country.replace(" ", "").toLowerCase() ===
+            country.replace(" ", "").toLowerCase()
+          ) {
+            return company.id;
+          }
+        })
+        .filter((id) => id !== undefined);
+      const productsByCountry = companiesIdByCountry.map((id) => {
+        return productData.filter((product) => {
+          return product.companyId === id;
+        });
+      });
+      return simulateProblems(res, { products: _.flatten(productsByCountry) });
+    } else {
+      res.status(404).send({
+        error: `We either don't sell in that country or we couldn't find what you're looking for.`,
+      });
+    }
   })
 
   .get("/products/detail/:productId", (req, res) => {
