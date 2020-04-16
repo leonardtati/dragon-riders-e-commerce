@@ -72,7 +72,7 @@ const FeatureWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 32px;
-  margin: 32px 0;
+  margin: 0 0 0 32px;
 `;
 const ProductLink = styled(Link)`
   text-decoration: none;
