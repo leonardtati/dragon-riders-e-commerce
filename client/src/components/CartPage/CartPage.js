@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeProduct, updateProduct } from "../../actions";
 import { formatPriceForHumans } from "../../helpers";
+import ConfirmPaymentModal from "../ConfirmPaymentModal/ConfirmPaymentModal";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,8 @@ const Cart = () => {
     }, 0);
   });
 
-  console.log("IN CARt", cartState, subtotal);
-
+  const [open, setOpen] = useState(false);
+  console.log('open', open);
   return (
     <Wrapper>
       <Top>
@@ -32,6 +33,7 @@ const Cart = () => {
         </Description>
 
         {cartStateArray.map((item) => {
+
           return (
             <Subtitle>
               <Qty
@@ -57,9 +59,12 @@ const Cart = () => {
         <Total>
           Total: <strong>{formatPriceForHumans(subtotal)}</strong>
         </Total>
-        <button style={{ width: 140 }}> Proceed to checkout</button>
+        <button style={{ width: 140 }} onClick={() => setOpen(true)}> Proceed to checkout</button>
       </Bottom>
+      {open ? <ConfirmPaymentModal open={open} cartStateArray={cartStateArray} price={formatPriceForHumans(subtotal)} /> : <></>}
+
     </Wrapper>
+
   );
 };
 
@@ -137,4 +142,5 @@ const Total = styled.div`
   padding: 10px 20px;
   color: black;
 `;
+
 export default Cart;

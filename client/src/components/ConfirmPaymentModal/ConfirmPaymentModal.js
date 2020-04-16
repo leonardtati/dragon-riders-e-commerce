@@ -9,77 +9,65 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
+// import PersonIcon from '@material-ui/icons/Person';
+// import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
-// const emails = ['username@gmail.com', 'user02@gmail.com'];
-// const useStyles = makeStyles({
-//     avatar: {
-//         backgroundColor: blue[100],
-//         color: blue[600],
-//     },
-// });
+// body: JSON.stringify({ order_summary: order }),
 
-function SimpleDialog(props) {
+function ConfirmPaymentModal(props) {
+    const order = props.cartStateArray.map((item) => {
+        return { 'item_id': item.id, quantity: item.quantity }
+    })
+
+
+    console.log('order', order);
+    console.log('props', props);
     // const classes = useStyles();
-    const { onClose, selectedValue, open } = props;
+    const { open } = props;
 
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
+    const handleSubmit = ev => {
+        ev.preventDefault();
 
-    // const handleListItemClick = (value) => {
-    //     onClose(value);
-    // };
-
+        fetch("/order", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                order_summary: order
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log('json', json);
+            })
+            .catch(err => {
+                console.log('message', err.message);
+            });
+    }
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <DialogTitle id="simple-dialog-title">Credit card information</DialogTitle>
-            <input
-                variant="outlined"
-                label="Credit card"
-                type="text"
-                value={creditCard}
-                onChange={ev => setCreditCard(ev.currentTarget.value)}
-                style={{ flex: 2 }}
-            />
-            <Spacer size={16} />
 
+        <Dialog aria-labelledby="simple-dialog-title" open={open}>
+            <form
+                onSubmit={ev => {
+                    handleSubmit(ev)
+
+                }}
+
+            >
+                <input
+                    variant="outlined"
+                    label="Credit card"
+                    type="submit"
+                    value="CONFIRM"
+                    // onChange={ev => setCreditCard(ev.currentTarget.value)}
+                    style={{ flex: 2 }}
+                /></form>
         </Dialog>
     );
 }
 
-SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
-};
-
-export default function SimpleDialogDemo() {
-    const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (value) => {
-        setOpen(false);
-        setSelectedValue(value);
-    };
-
-    return (
-        <div>
-            <Typography variant="subtitle1">Purchased: {selectedValue}</Typography>
-            <br />
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Confirm payment
-      </Button>
-            <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-        </div>
-    );
-}
 
 export default ConfirmPaymentModal;
