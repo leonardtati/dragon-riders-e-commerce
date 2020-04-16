@@ -21,7 +21,7 @@ function FeaturedProducts() {
 
   useEffect(() => {
     dispatch(requestFeatures());
-    fetch(`/countries/${countryId.country.replace(" ", "")}/featuredproducts`)
+    fetch(`/countries/${countryId.country}/featuredproducts`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(receiveFeatures({ data, countryId }));

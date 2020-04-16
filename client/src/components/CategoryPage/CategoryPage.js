@@ -9,6 +9,7 @@ import {
 } from "../../actions";
 import styled from "styled-components";
 import { LinearProgress } from "@material-ui/core";
+import styled from "styled-components";
 
 const CategoryPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const CategoryPage = () => {
     }
     dispatch(requestCategoriesProducts());
     //the issue is: on refresh, the params change and I cannot find "current country"
-    fetch(`/products/${currentCountry.replace(" ", "")}`)
+    fetch(`/products/${currentCountry}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(receiveCategoriesProducts(data.products));
@@ -34,48 +35,35 @@ const CategoryPage = () => {
       .catch((error) => {
         dispatch(receiveCategoriesProductsError(error));
       });
-  }, []);
-
-  console.log("this is the issue", currentCountry);
-
+  }, [categories]);
   return (
     <FeatureWrapper>
-      {status === "loading" || currentCountry === null ? (
-        <LinearProgress variant="determinate" />
-      ) : (
-        categoryProducts.map((product) => {
-          const inStock = product.numInStock <= 0;
-          if (productType.country === product.category) {
-            return (
-              <>
+      {categoryProducts.map((product) => {
+        if (productType.country === product.category) {
+          return (
+            <>
+              <ProductLink to={`/detail/${product.id}`}>
                 <ProductWrapper>
-                  <ProductLink to={`/detail/${product.id}`}>
-                    <ProductImage src={product.imageSrc}></ProductImage>
-                    <ProductName>{product.name}</ProductName>
-                    <ProductCategory>{product.price}</ProductCategory>
-                    <ProductPrice>{product.category}</ProductPrice>
-                    <ProductPrice>
-                      {inStock
-                        ? `We're Out of Stock! Come Back For This Shortly!`
-                        : product.numInStock <= 5 && product.numInStock >= 2
-                        ? `There are only ${product.numInStock} item(s) left!`
-                        : product.numInStock <= 1
-                        ? `Only ${product.numInStock} left!`
-                        : `Stock: ${product.numInStock}`}
-                    </ProductPrice>
-                  </ProductLink>
-                  <Button
-                    disabled={inStock}
-                    onClick={() => dispatch(addProduct(product))}
-                  >
-                    Add To Cart
-                  </Button>
+                  <ProductImage src={product.imageSrc}></ProductImage>
+                  <ProductName>{product.name}</ProductName>
+                  <ProductCategory>{product.price}</ProductCategory>
+                  <ProductPrice>{product.category}</ProductPrice>
+                  <ProductPrice>
+                    {product.numInStock <= 0
+                      ? `We're Out of Stock! Come Back For This Shortly!`
+                      : product.numInStock <= 5 && product.numInStock >= 2
+                      ? `There are only ${product.numInStock} item(s) left!`
+                      : product.numInStock <= 1
+                      ? `Only ${product.numInStock} left!`
+                      : `Stock: ${product.numInStock}`}
+                  </ProductPrice>
+                  <button>Add To Cart</button>
                 </ProductWrapper>
-              </>
-            );
-          }
-        })
-      )}
+              </ProductLink>
+            </>
+          );
+        }
+      })}
     </FeatureWrapper>
   );
 };
@@ -96,7 +84,7 @@ const ProductWrapper = styled.div`
 
 const ProductImage = styled.img`
   border-radius: 12px;
-  width 60%;
+  width: 60%;
 `;
 
 const ProductName = styled.h2`

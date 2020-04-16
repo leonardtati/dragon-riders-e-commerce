@@ -14,10 +14,21 @@ export function cartReducer(state = initialState, action) {
         },
       };
     }
-    case "REMOVE_ITEM": {
+    case "REMOVE_PRODUCT": {
       const newCart = { ...state };
-      delete newCart[action.feature.id];
+      delete newCart[action.feature];
       return newCart;
+    }
+
+    case "UPDATE_PRODUCT": {
+      const { feature, newQuantity } = action;
+      return {
+        ...state,
+        [feature]: {
+          ...state[feature],
+          quantity: newQuantity,
+        },
+      };
     }
     case "CLEAR_CART": {
       return initialState;
@@ -28,4 +39,3 @@ export function cartReducer(state = initialState, action) {
 }
 
 export const getStoreProductArray = (state) => Object.values(state);
-
