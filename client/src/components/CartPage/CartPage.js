@@ -22,32 +22,24 @@ const Cart = () => {
     <Wrapper>
       <Top>
         <Title>Your Cart</Title>
-        <span>QTY</span>
-        <span>ITEM</span>
-        <span>PRICE</span>
-        <span></span>
-
-        {cartStateArray.map((item) => {
-          return (
-            <Subtitle>
-              <Qty
-                value={item.quantity}
-                onChange={(ev) =>
-                  dispatch(updateProduct(item.id, ev.target.value))
-                }
-              ></Qty>
-
-              <ItemList>{item.name}</ItemList>
-              <Price>{item.price}</Price>
-              <button
-                style={{ width: 50 }}
-                onClick={() => dispatch(removeProduct(item.id))}
-              >
-                X
-              </button>
-            </Subtitle>
-          );
-        })}
+        <Subtitle>
+          <TitleRow>
+            <span>QTY</span>
+            <span>ITEM</span>
+            <span>PRICE</span>
+            <span></span>
+            <Qty>
+              12
+              {/* {items.length} {items.length === 1 ? 'Item' : 'Items'} */}
+            </Qty>
+            <ItemList>
+              Product I want to buy
+              {}
+            </ItemList>
+            <Price>$120.99</Price>
+            <ButtonX>X</ButtonX>
+          </TitleRow>
+        </Subtitle>
       </Top>
       <Bottom>
         <Total>
@@ -60,34 +52,18 @@ const Cart = () => {
 };
 
 const Wrapper = styled.section`
-  /* position: sticky;
-  top: 0;
-  min-width: 300px;
-  height: 100vh; */
-  background: hsl(258deg, 100%, 50%);
-  color: white;
+  background: #E5E5E5;
+  color: black;
   padding-top: 16px;
   padding-bottom: 16px;
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center; */
-  /* display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 32px;
-  margin: 32px 0; */
+  padding-left: 100px;
 `;
 
 const Top = styled.div`
-  /* max-height: calc(100vh - 240px);
-  overflow: auto;
-  padding-left: 32px;
-  padding-right: 32px; */
   display: grid;
-  /* flex-direction: row;
-  justify-content: center; */
-  /* grid-template-columns: 1fr; */
-  grid-gap: 32px;
-  margin: 32px 0;
+  grid-gap: 0px;
+  margin: 0;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
 `;
 
 const Bottom = styled.div`
@@ -100,7 +76,7 @@ const Bottom = styled.div`
 `;
 
 const Title = styled.h2`
-  color: white;
+  color: black;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 0;
@@ -109,46 +85,51 @@ const Title = styled.h2`
 const Subtitle = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 32px;
-  margin: 32px 0;
+  grid-gap: 0;
+  margin: 0;
+  margin-top: 0px;
+  font-size: 16px;
+ `;
+
+const TitleRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 0;
   margin: 0;
   margin-top: 8px;
   font-size: 16px;
-  /* opacity: 0.75; */
 `;
 
-const Qty = styled.input`
-  margin: 0;
-  margin-top: 8px;
+const ButtonX = styled.button`
+  background-color: #C4C4C4;
+  width: 50px;
   font-size: 16px;
-  background-color: orange;
-  width: 100px;
-  border: none;
-  text-align: center;
-  /* opacity: 0.75; */
-`;
-
-const Price = styled.ul`
-  margin: 0;
-  margin-top: 8px;
-  font-size: 16px;
-  background-color: orange;
-  width: 100px;
-  /* opacity: 0.75; */
 `;
 
 const ItemList = styled.ul`
-  /* list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 10px 20px; */
-  /* padding-top: 32px; */
   margin: 0;
   margin-top: 8px;
   font-size: 16px;
-  background-color: orange;
+  background-color: white;
   width: 300px;
+  height: 25px;
+  text-align: left;
+`;
+
+const Qty = styled.div`
+  margin: 0;
+  margin-top: 8px;
+  font-size: 16px;
+  background-color: white;
+  width: 60px;
+`;
+
+const Price = styled.div`
+  margin: 0;
+  margin-top: 8px;
+  font-size: 16px;
+  background-color: white;
+  width: 80px;
 `;
 
 const Total = styled.div`
