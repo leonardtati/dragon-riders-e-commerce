@@ -126,9 +126,9 @@ express()
       if (!item.item_id || !item.quantity) {
         res
           .status(400)
-          .send({ message: "Item Id and/or Quantisties Missing :(" });
+          .send({ message: "Item Id and/or Quantities Missing :(" });
       }
-      productData
+      return productData
         .filter((product) => product.id === item.item_id)
         .map((orderItem) => {
           if (orderItem.numInStock - item.quantity >= 0) {
