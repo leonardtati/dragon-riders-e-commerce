@@ -5,7 +5,7 @@ import LandingPage from "../LandingPage/LandingPage";
 const ErrorPage = () => {
   return (
     <Wrapper>
-      <h1>ErRoR 404 SOmEtHinG WeNT WRong :/</h1>
+      {/* <h1>ErRoR 404 SOmEtHinG WeNT WRong :/</h1> */}
       <Redirect to="/">
         <Link to="/">Home Page</Link>
         <LandingPage />
@@ -15,10 +15,10 @@ const ErrorPage = () => {
 };
 
 const Wrapper = styled.div`
-  padding-bottom: 24px
-  width: 100%;
+  padding-bottom: 24px;
+  width: 1000px;
   height: 100vh;
-  background-image: url("/Error404.jpg");
+  background-image: url("/error_page.png");
   background-size: cover;
 `;
 
