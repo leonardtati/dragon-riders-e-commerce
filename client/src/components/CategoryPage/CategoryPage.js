@@ -9,7 +9,6 @@ import {
 } from "../../actions";
 import styled from "styled-components";
 import { LinearProgress } from "@material-ui/core";
-import styled from "styled-components";
 
 const CategoryPage = () => {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const CategoryPage = () => {
   const categoryProducts = useSelector(
     (state) => state.categoryProduct.categoryProducts
   );
-  const status = useSelector((state) => state.categoryProduct.status);
+  const state = useSelector((state) => state.categoryProduct.status);
   const categories = useSelector((state) => state.category.categories);
   const currentCountry = useSelector((state) => state.feature.currentCountry);
 
@@ -38,32 +37,42 @@ const CategoryPage = () => {
   }, [categories]);
   return (
     <FeatureWrapper>
-      {categoryProducts.map((product) => {
-        if (productType.country === product.category) {
-          return (
-            <>
-              <ProductLink to={`/detail/${product.id}`}>
-                <ProductWrapper>
-                  <ProductImage src={product.imageSrc}></ProductImage>
-                  <ProductName>{product.name}</ProductName>
-                  <ProductCategory>{product.price}</ProductCategory>
-                  <ProductPrice>{product.category}</ProductPrice>
-                  <ProductPrice>
-                    {product.numInStock <= 0
-                      ? `We're Out of Stock! Come Back For This Shortly!`
-                      : product.numInStock <= 5 && product.numInStock >= 2
-                      ? `There are only ${product.numInStock} item(s) left!`
-                      : product.numInStock <= 1
-                      ? `Only ${product.numInStock} left!`
-                      : `Stock: ${product.numInStock}`}
-                  </ProductPrice>
-                  <button>Add To Cart</button>
-                </ProductWrapper>
-              </ProductLink>
-            </>
-          );
-        }
-      })}
+      {state === "loading" || categoryProducts === undefined ? (
+        <LinearProgress variant="determinate" />
+      ) : (
+        categoryProducts.map((product) => {
+          const inStock = product.numInStock <= 0;
+          if (productType.country === product.category) {
+            return (
+              <>
+                <ProductLink to={`/detail/${product.id}`}>
+                  <ProductWrapper>
+                    <ProductImage src={product.imageSrc}></ProductImage>
+                    <ProductName>{product.name}</ProductName>
+                    <ProductCategory>{product.price}</ProductCategory>
+                    <ProductPrice>{product.category}</ProductPrice>
+                    <ProductPrice>
+                      {inStock
+                        ? `We're Out of Stock! Come Back For This Shortly!`
+                        : product.numInStock <= 5 && product.numInStock >= 2
+                        ? `There are only ${product.numInStock} item(s) left!`
+                        : product.numInStock <= 1
+                        ? `Only ${product.numInStock} left!`
+                        : `Stock: ${product.numInStock}`}
+                    </ProductPrice>
+                    <Button
+                      disabled={inStock}
+                      onClick={() => dispatch(addProduct(product))}
+                    >
+                      Add To Cart{" "}
+                    </Button>
+                  </ProductWrapper>
+                </ProductLink>
+              </>
+            );
+          }
+        })
+      )}
     </FeatureWrapper>
   );
 };
