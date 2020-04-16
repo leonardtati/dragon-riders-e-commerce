@@ -9,20 +9,13 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
+// import PersonIcon from '@material-ui/icons/Person';
+// import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
-// const emails = ['username@gmail.com', 'user02@gmail.com'];
-// const useStyles = makeStyles({
-//     avatar: {
-//         backgroundColor: blue[100],
-//         color: blue[600],
-//     },
-// });
 
-function SimpleDialog(props) {
+function ConfirmPaymentModal(props) {
     // const classes = useStyles();
     const { onClose, selectedValue, open } = props;
 
@@ -41,25 +34,25 @@ function SimpleDialog(props) {
                 variant="outlined"
                 label="Credit card"
                 type="text"
-                value={creditCard}
-                onChange={ev => setCreditCard(ev.currentTarget.value)}
+                value="{creditCard}"
+                // onChange={ev => setCreditCard(ev.currentTarget.value)}
                 style={{ flex: 2 }}
             />
-            <Spacer size={16} />
+            {/* <Spacer size={16} /> */}
 
         </Dialog>
     );
 }
 
-SimpleDialog.propTypes = {
+ConfirmPayment.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     selectedValue: PropTypes.string.isRequired,
 };
 
-export default function SimpleDialogDemo() {
+function ConfirmPayment() {
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+    // const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -67,17 +60,17 @@ export default function SimpleDialogDemo() {
 
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
+        // setSelectedValue(value);
     };
 
     return (
         <div>
-            <Typography variant="subtitle1">Purchased: {selectedValue}</Typography>
+            <Typography variant="subtitle1">Purchased:</Typography>
             <br />
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Confirm payment
       </Button>
-            <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+            <Dialog open={open} onClose={handleClose} />
         </div>
     );
 }

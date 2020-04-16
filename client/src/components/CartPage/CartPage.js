@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { removeProduct, updateProduct } from "../../actions";
 import { formatPriceForHumans } from "../../helpers";
+import ConfirmPaymentModal from "../ConfirmPaymentModal/ConfirmPaymentModal";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -28,14 +29,8 @@ const Cart = () => {
             <span>ITEM</span>
             <span>PRICE</span>
             <span></span>
-            <Qty>
-              12
-              {/* {items.length} {items.length === 1 ? 'Item' : 'Items'} */}
-            </Qty>
-            <ItemList>
-              Product I want to buy
-              {}
-            </ItemList>
+            <Qty>12</Qty>
+            <ItemList>Product I want to buy</ItemList>
             <Price>$120.99</Price>
             <ButtonX>X</ButtonX>
           </TitleRow>
@@ -47,7 +42,9 @@ const Cart = () => {
         </Total>
         <button style={{ width: 140 }}>Purchase</button>
       </Bottom>
+      <ConfirmPaymentModal />
     </Wrapper>
+
   );
 };
 
@@ -89,7 +86,7 @@ const Subtitle = styled.div`
   margin: 0;
   margin-top: 0px;
   font-size: 16px;
- `;
+`;
 
 const TitleRow = styled.div`
   display: grid;
@@ -136,4 +133,5 @@ const Total = styled.div`
   font-size: 22px;
   padding: 10px 20px;
 `;
+
 export default Cart;
