@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,7 +19,6 @@ const CategoryPage = () => {
   const state = useSelector((state) => state.categoryProduct.status);
   const categories = useSelector((state) => state.category.categories);
   const currentCountry = useSelector((state) => state.feature.currentCountry);
-
   useEffect(() => {
     if (currentCountry === null) {
       console.log("x");
@@ -37,7 +36,9 @@ const CategoryPage = () => {
   }, [categories]);
   return (
     <FeatureWrapper>
-      {state === "loading" || categoryProducts === undefined ? (
+      {state === "loading" ||
+      categoryProducts === undefined ||
+      currentCountry === null ? (
         <LinearProgress variant="determinate" />
       ) : (
         categoryProducts.map((product) => {
@@ -124,11 +125,6 @@ const Button = styled.button`
 const ProductLink = styled(Link)`
   text-decoration: none;
   transition: transform 250ms;
-
-  &:hover {
-    transform: scale(1.1);
-    transform-origin: center;
-  }
 `;
 
 export default CategoryPage;
