@@ -11,6 +11,8 @@ import Dialog from "@material-ui/core/Dialog";
 import { DialogContent, DialogContentText } from "@material-ui/core";
 import SnackBar from "../SnackBar/SnackBar";
 import styled from "styled-components";
+import ErrorPage from "../ErrorPage/ErrorPage";
+
 function ConfirmPaymentModal(props) {
   const order = props.cartStateArray.map((item) => {
     return { item_id: item.id, quantity: item.quantity };
@@ -92,7 +94,13 @@ function ConfirmPaymentModal(props) {
         </form>
       </Dialog>
       <Wrapper>
-        {message === "Successful Purchase!" ? <SnackBar /> : <></>}
+        {message === "Successful Purchase!" ? (
+          <SnackBar />
+        ) : message === "Failure" ? (
+          <No>NAHHHH</No>
+        ) : (
+          <></>
+        )}
       </Wrapper>
     </>
   );
@@ -102,6 +110,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const No = styled.h1`
+  color: black;
+  font-size: 3em;
 `;
 
 export default ConfirmPaymentModal;
