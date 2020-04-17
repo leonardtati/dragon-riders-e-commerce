@@ -145,7 +145,7 @@ const ItemList = styled.span`
   margin-left: 200px;
 
   &:hover {
-    overflow: wrap;
+    overflow: visible;
   }
 `;
 
