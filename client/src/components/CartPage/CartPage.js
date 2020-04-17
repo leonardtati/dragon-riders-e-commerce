@@ -22,7 +22,6 @@ const Cart = () => {
   console.log("CARTSTATEINCAR", cartState);
 
   const [open, setOpen] = useState(false);
-  console.log("open", open);
   return (
     <Wrapper>
       <Top>
