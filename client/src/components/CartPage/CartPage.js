@@ -19,7 +19,7 @@ const Cart = () => {
     }, 0);
   });
 
-  console.log("CARTSTATEINCAR", cartState);
+  console.log(cartState);
 
   const [open, setOpen] = useState(false);
   return (
@@ -91,9 +91,6 @@ const Description = styled.div`
 const Top = styled.div`
   color: black;
   display: grid;
-  /* flex-direction: row;
-  justify-content: center; */
-  /* grid-template-columns: 1fr; */
   grid-gap: 32px;
   margin: 32px 0;
 `;
@@ -122,6 +119,7 @@ const Subtitle = styled.div`
   margin-left: 66px;
   margin-right: 66px;
   margin-bottom: 6px;
+  padding-bottom: 10px;
   font-size: 16px;
   border-bottom: solid;
   justify-content: space-around;
@@ -133,6 +131,7 @@ const Qty = styled.input`
   text-align: center;
   margin-left: 55px;
   color: #048ba9;
+  font-size: 15px;
 `;
 const ItemList = styled.span`
   display: inline-block;
@@ -151,12 +150,14 @@ const ItemList = styled.span`
 
 const Price = styled.div`
   width: 100px;
-  margin-left: 269px;
+  margin-left: 300px;
   margin-bottom: 0px;
+
   color: #e28181;
 `;
 const RemoveItem = styled.button`
   border: none;
+  cursor: pointer;
 `;
 
 const Total = styled.div`
@@ -166,6 +167,8 @@ const Total = styled.div`
 `;
 
 const ProceedTocheckOut = styled.button`
+  font-size: 12px;
+  text-align: center;
   padding: 15px;
   color: white;
   background-color: #404040;
