@@ -9,19 +9,19 @@ import DropDown from "../DropDown/DropDown";
 import ErrorPage from '../ErrorPage/ErrorPage';
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-function Home() { 
-  
+function Home() {
+
   const countriesStatus = useSelector((state) => state.country.status);
 
   return (
     <>
-    <LandingWrapper>
-    <PageDescription>
-      Weary Sweaty sells the finest wearable equipment to help you stay
-      healthy.
+      <LandingWrapper>
+        <PageDescription>
+          Dragon Riders sells the finest wearable equipment to help you stay
+          healthy.
     </PageDescription>
-    <DropDown />
-    </LandingWrapper>
+        <DropDown />
+      </LandingWrapper>
     </>
   );
 }
