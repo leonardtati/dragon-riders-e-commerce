@@ -22,6 +22,7 @@ const Cart = () => {
   console.log(cartState);
 
   const [open, setOpen] = useState(false);
+
   return (
     <Wrapper>
       <Top>
