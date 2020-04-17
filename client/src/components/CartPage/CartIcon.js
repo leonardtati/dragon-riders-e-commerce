@@ -15,32 +15,33 @@ const CartIcon = () => {
   const productQuantity = useSelector((state) => {
     const productItems = Object.values(state.cart);
     return productItems.reduce((acc, item) => {
-      return item.quantity + acc;
+      const stringtoNum = parseFloat(item.quantity);
+      return stringtoNum + acc;
     }, 0);
   });
 
   return (
     <>
       <LinkToCart to={"/cart"}>
-        <Icon icon={shoppingCart} size={30}></Icon>
         {productQuantity > 0 ? (
           <NumProducts>{productQuantity}</NumProducts>
         ) : (
           <></>
         )}
+        <Icon icon={shoppingCart} size={30}></Icon>
       </LinkToCart>
     </>
   );
 };
 
 const NumProducts = styled.div`
-  margin-left: 5px;
+  margin-left: 10px;
   display: flex;
   align-content: center;
   height: 17px;
   width: 17px;
   border-radius: 50%;
-  background-color: red;
+  background-color: #e28181;
   color: white;
 `;
 const LinkToCart = styled(NavLink)`
