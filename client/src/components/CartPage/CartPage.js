@@ -19,21 +19,21 @@ const Cart = () => {
     }, 0);
   });
 
+  console.log("CARTSTATEINCAR", cartState);
+
   const [open, setOpen] = useState(false);
-  console.log('open', open);
+
   return (
     <Wrapper>
       <Top>
         <Title>Your Cart</Title>
         <Description>
           <span>QTY</span>
-          <span>ITEM</span>
+          <span>ITEMS</span>
           <span>PRICE</span>
-          <span></span>
         </Description>
 
         {cartStateArray.map((item) => {
-
           return (
             <Subtitle>
               <Qty
@@ -45,12 +45,12 @@ const Cart = () => {
 
               <ItemList>{item.name}</ItemList>
               <Price>{item.price}</Price>
-              <button
+              <RemoveItem
                 style={{ width: 50 }}
                 onClick={() => dispatch(removeProduct(item.id))}
               >
                 X
-              </button>
+              </RemoveItem>
             </Subtitle>
           );
         })}
@@ -59,12 +59,20 @@ const Cart = () => {
         <Total>
           Total: <strong>{formatPriceForHumans(subtotal)}</strong>
         </Total>
-        <button style={{ width: 140 }} onClick={() => setOpen(true)}> Proceed to checkout</button>
+        <ProceedTocheckOut style={{ width: 140 }} onClick={() => setOpen(true)}>
+          Proceed to checkout
+        </ProceedTocheckOut>
       </Bottom>
-      {open ? <ConfirmPaymentModal open={open} cartStateArray={cartStateArray} price={formatPriceForHumans(subtotal)} /> : <></>}
-
+      {open ? (
+        <ConfirmPaymentModal
+          open={open}
+          cartStateArray={cartStateArray}
+          price={formatPriceForHumans(subtotal)}
+        />
+      ) : (
+        <></>
+      )}
     </Wrapper>
-
   );
 };
 
@@ -78,7 +86,7 @@ const Wrapper = styled.section`
 `;
 const Description = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const Top = styled.div`
@@ -101,46 +109,67 @@ const Bottom = styled.div`
 `;
 
 const Title = styled.h2`
+  display: flex;
   color: black;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 0;
+  justify-content: center;
 `;
 
 const Subtitle = styled.div`
   display: flex;
-  grid-gap: 32px;
-  margin: 32px 0;
-  margin: 0;
   margin-top: 8px;
+  margin-left: 66px;
+  margin-right: 66px;
+  margin-bottom: 6px;
   font-size: 16px;
   border-bottom: solid;
   justify-content: space-around;
-  border-bottom-color: grey;
+  border-bottom-color: #e6e6e6;
 `;
 
 const Qty = styled.input`
   border: none;
   text-align: center;
-  /* opacity: 0.75; */
+  margin-left: 55px;
+  color: #048ba9;
+`;
+const ItemList = styled.span`
+  display: inline-block;
+  font-size: 16px;
+  background-color: white;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 200px;
+
+  &:hover {
+    overflow: wrap;
+  }
 `;
 
 const Price = styled.div`
   width: 100px;
+  margin-left: 269px;
+  margin-bottom: 0px;
+  color: #e28181;
 `;
-
-const ItemList = styled.div`
-  margin: 0;
-  margin-top: 8px;
-  font-size: 16px;
-  background-color: white;
-  width: 300px;
+const RemoveItem = styled.button`
+  border: none;
 `;
 
 const Total = styled.div`
   font-size: 22px;
   padding: 10px 20px;
   color: black;
+`;
+
+const ProceedTocheckOut = styled.button`
+  padding: 15px;
+  color: white;
+  background-color: #404040;
 `;
 
 export default Cart;
