@@ -3,7 +3,7 @@ import styled from "styled-components";
 const SnackBar = () => {
   return (
     <Message>
-      <Success>Purchase Successful, We'll Be There Shortly</Success>
+      <Success>Purchase Successful, We'll Be There Shortly..</Success>
       <img src="/dragon-purchase.jpg"></img>
     </Message>
   );
