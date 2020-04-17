@@ -38,14 +38,22 @@ const NumProducts = styled.div`
   margin-left: 10px;
   display: flex;
   align-content: center;
-  height: 17px;
-  width: 17px;
+  height: 15px;
+  width: 15px;
+  font-size: 12px;
+  position: relative;
+  margin-right: 6px;
+  display: inherit;
+  padding-bottom: 20px;
+  padding-left: 4px;
+
   border-radius: 50%;
   background-color: #e28181;
   color: white;
 `;
 const LinkToCart = styled(NavLink)`
   color: black;
+  text-decoration: none;
 `;
 
 export default CartIcon;

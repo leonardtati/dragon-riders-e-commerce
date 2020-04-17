@@ -19,7 +19,7 @@ const Cart = () => {
     }, 0);
   });
 
-  console.log("CARTSTATEINCAR", cartState);
+  console.log(cartState);
 
   const [open, setOpen] = useState(false);
 
@@ -83,6 +83,12 @@ const Wrapper = styled.section`
   color: white;
   padding-top: 16px;
   padding-bottom: 16px;
+  border-style: solid;
+  border-color: #e6e6e6;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-width: thin;
+  box-shadow: 0px 0px 5px 5px #67636326;
 `;
 const Description = styled.div`
   display: flex;
@@ -92,9 +98,6 @@ const Description = styled.div`
 const Top = styled.div`
   color: black;
   display: grid;
-  /* flex-direction: row;
-  justify-content: center; */
-  /* grid-template-columns: 1fr; */
   grid-gap: 32px;
   margin: 32px 0;
 `;
@@ -123,6 +126,7 @@ const Subtitle = styled.div`
   margin-left: 66px;
   margin-right: 66px;
   margin-bottom: 6px;
+  padding-bottom: 10px;
   font-size: 16px;
   border-bottom: solid;
   justify-content: space-around;
@@ -134,6 +138,7 @@ const Qty = styled.input`
   text-align: center;
   margin-left: 55px;
   color: #048ba9;
+  font-size: 15px;
 `;
 const ItemList = styled.span`
   display: inline-block;
@@ -146,18 +151,20 @@ const ItemList = styled.span`
   margin-left: 200px;
 
   &:hover {
-    overflow: wrap;
+    overflow: visible;
   }
 `;
 
 const Price = styled.div`
   width: 100px;
-  margin-left: 269px;
+  margin-left: 300px;
   margin-bottom: 0px;
+
   color: #e28181;
 `;
 const RemoveItem = styled.button`
   border: none;
+  cursor: pointer;
 `;
 
 const Total = styled.div`
@@ -167,6 +174,8 @@ const Total = styled.div`
 `;
 
 const ProceedTocheckOut = styled.button`
+  font-size: 12px;
+  text-align: center;
   padding: 15px;
   color: white;
   background-color: #404040;

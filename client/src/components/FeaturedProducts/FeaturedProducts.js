@@ -111,15 +111,16 @@ const ProductPrice = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #048BA9;
+  background-color: #048ba9;
   color: white;
   padding: 10px;
   font-size: 12px;
   border-radius: 7px;
   cursor: pointer;
-  &: disabled {
+
+  &:disabled {
     background-color: grey;
   }
-}`;
+`;
 
 export default FeaturedProducts;

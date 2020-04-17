@@ -122,27 +122,29 @@ express()
 
   .post("/order", (req, res) => {
     const { order_summary } = req.body;
-    order_summary.map((item) => {
+    if (!order_summary.length) {
+      return res.status(400).send({ message: "Failure" });
+    }
+    const isOrderSuccessful = _.flatten(order_summary).map((item) => {
       if (!item.item_id || !item.quantity) {
-        res
-          .status(400)
-          .send({ message: "Item Id and/or Quantities Missing :(" });
+        return false;
       }
       return productData
         .filter((product) => product.id === item.item_id)
         .map((orderItem) => {
           if (orderItem.numInStock - item.quantity >= 0) {
             orderItem.numInStock -= item.quantity;
-            return simulateProblems(res, {
-              message: "Successful Purchase!",
-            });
-          } else {
-            return simulateProblems(res, {
-              message: `We're out of ${orderItem.name} in our stock`,
-            });
+            return true;
+          } else if (orderItem.numInStock - item.quantity <= 0) {
+            return false;
           }
         });
     });
+    if (_.flatten(isOrderSuccessful).includes(false)) {
+      return res.status(400).send({ message: "Failure" });
+    } else {
+      return res.status(200).send({ message: "Successful Purchase!" });
+    }
   })
 
   //---Gets Categories, Organized by Country---//
