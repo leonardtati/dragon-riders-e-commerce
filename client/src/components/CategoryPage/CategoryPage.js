@@ -46,8 +46,8 @@ const CategoryPage = () => {
           if (productType.country === product.category) {
             return (
               <>
-                <ProductLink to={`/detail/${product.id}`}>
-                  <ProductWrapper>
+                <ProductWrapper>
+                  <ProductLink to={`/detail/${product.id}`}>
                     <ProductImage src={product.imageSrc}></ProductImage>
                     <ProductName>{product.name}</ProductName>
                     <ProductCategory>{product.price}</ProductCategory>
@@ -61,14 +61,14 @@ const CategoryPage = () => {
                         ? `Only ${product.numInStock} left!`
                         : `Stock: ${product.numInStock}`}
                     </ProductPrice>
-                    <Button
-                      disabled={inStock}
-                      onClick={() => dispatch(addProduct(product))}
-                    >
-                      Add To Cart{" "}
-                    </Button>
-                  </ProductWrapper>
-                </ProductLink>
+                  </ProductLink>
+                  <Button
+                    disabled={inStock}
+                    onClick={() => dispatch(addProduct(product))}
+                  >
+                    Add To Cart{" "}
+                  </Button>
+                </ProductWrapper>
               </>
             );
           }
