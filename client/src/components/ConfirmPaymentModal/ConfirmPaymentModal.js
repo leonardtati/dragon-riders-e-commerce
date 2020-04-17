@@ -98,9 +98,7 @@ function ConfirmPaymentModal(props) {
           <SnackBar />
         ) : message === "Failure" ? (
           <BadSnack>
-            <No>
-              We're Sorry! We Don't Have Enough Quantity of Those Products
-            </No>
+            <No>NAHHHH</No>
           </BadSnack>
         ) : (
           <></>
