@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const companyData = require("./data/companies.json");
 const productData = require("./data/items.json");
 const _ = require("lodash");
-
+const { simulateProblems, getCountryList } = require("./helpers.js");
 const PORT = 4000;
 express()
   .use(function (req, res, next) {
@@ -31,11 +31,7 @@ express()
   //---Gets Country List in an Array---//
 
   .get("/countries", (req, res) => {
-    const countryList = companyData.map((country) => {
-      return country.country;
-    });
-    const uniqueCountries = Array.from(new Set(countryList));
-
+    const uniqueCountries = getCountryList();
     res.status(200).send({ countries: uniqueCountries });
   })
 
@@ -48,30 +44,38 @@ express()
         company.country.replace(" ", "").toLowerCase() === country.toLowerCase()
       );
     });
-    res.status(200).send({ companies: companiesByCountry });
+    return simulateProblems(res, { companies: companiesByCountry });
   })
 
   //----Gets the Products by each country----//
-
   .get("/products/:country", (req, res) => {
     const { country } = req.params;
-    const companiesIdByCountry = companyData
-      .map((company) => {
-        if (
-          company.country.replace(" ", "").toLowerCase() ===
-          country.toLowerCase()
-        ) {
-          return company.id;
-        }
-      })
-      .filter((id) => id !== undefined);
-    const productsByCountry = companiesIdByCountry.map((id) => {
-      return productData.filter((product) => {
-        return product.companyId === id;
-      });
+    const countryList = getCountryList().map((country) => {
+      return country.toLowerCase();
     });
 
-    res.status(200).send({ products: _.flatten(productsByCountry) });
+    if (countryList.includes(country.toLowerCase())) {
+      const companiesIdByCountry = companyData
+        .map((company) => {
+          if (
+            company.country.replace(" ", "").toLowerCase() ===
+            country.replace(" ", "").toLowerCase()
+          ) {
+            return company.id;
+          }
+        })
+        .filter((id) => id !== undefined);
+      const productsByCountry = companiesIdByCountry.map((id) => {
+        return productData.filter((product) => {
+          return product.companyId === id;
+        });
+      });
+      return simulateProblems(res, { products: _.flatten(productsByCountry) });
+    } else {
+      res.status(404).send({
+        error: `We either don't sell in that country or we couldn't find what you're looking for.`,
+      });
+    }
   })
 
   .get("/products/detail/:productId", (req, res) => {
@@ -80,9 +84,9 @@ express()
       (product) => product.id === parseInt(productId)
     );
     if (product) {
-      res.status(200).send({ product });
+      return simulateProblems(res, { product });
     } else {
-      res.status(404).send({ message: "Product not found." });
+      return simulateProblems(res, { message: "Product not found." });
     }
   })
 
@@ -111,30 +115,36 @@ express()
         return parseFloat(newPrice) < 20;
       }
     });
-    res.status(200).send({ features: lowestPrices });
+    return simulateProblems(res, { features: lowestPrices });
   })
 
   //Order-Form Validation
 
   .post("/order", (req, res) => {
     const { order_summary } = req.body;
-    const updateOrder = order_summary.map((item) => {
+    if (!order_summary.length) {
+      return res.status(400).send({ message: "Failure" });
+    }
+    const isOrderSuccessful = _.flatten(order_summary).map((item) => {
       if (!item.item_id || !item.quantity) {
-        res
-          .status(400)
-          .send({ message: "Item Id and/or Quantaties Missing :(" });
+        return false;
       }
       return productData
         .filter((product) => product.id === item.item_id)
         .map((orderItem) => {
-          if (orderItem.numInStock - item.quantity > 0) {
+          if (orderItem.numInStock - item.quantity >= 0) {
             orderItem.numInStock -= item.quantity;
-            res.status(200).send({
-              message: "Successful Purchase!",
-            });
+            return true;
+          } else if (orderItem.numInStock - item.quantity <= 0) {
+            return false;
           }
         });
     });
+    if (_.flatten(isOrderSuccessful).includes(false)) {
+      return res.status(400).send({ message: "Failure" });
+    } else {
+      return res.status(200).send({ message: "Successful Purchase!" });
+    }
   })
 
   //---Gets Categories, Organized by Country---//
@@ -159,9 +169,9 @@ express()
     const productsByCategories = _.flatten(productsByCountry).map((product) => {
       return product.category;
     });
-    res
-      .status(200)
-      .send({ categories: Array.from(new Set(productsByCategories)) });
+    return simulateProblems(res, {
+      categories: Array.from(new Set(productsByCategories)),
+    });
   })
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
