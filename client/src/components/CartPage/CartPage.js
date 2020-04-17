@@ -42,7 +42,10 @@ const Cart = () => {
                 }
               ></Qty>
 
-              <ItemList>{item.name}</ItemList>
+              <ItemList>
+                <ImageIcon src={item.imageSrc} />
+                <ItemDescription>{item.name}</ItemDescription>
+              </ItemList>
               <Price>{item.price}</Price>
               <RemoveItem
                 style={{ width: 50 }}
@@ -139,18 +142,30 @@ const Qty = styled.input`
   color: #048ba9;
   font-size: 15px;
 `;
+
+const ImageIcon = styled.img`
+  height: 50px;
+  margin-right: 40px;
+`;
 const ItemList = styled.span`
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
   font-size: 16px;
   background-color: white;
   width: 200px;
+  margin-left: 200px;
+  margin-top: 15px;
+`;
+
+const ItemDescription = styled.div`
+  margin-top: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: 200px;
-
+  max-width: 15ch;
   &:hover {
     overflow: visible;
+    max-width: 5ch;
   }
 `;
 
@@ -158,10 +173,12 @@ const Price = styled.div`
   width: 100px;
   margin-left: 300px;
   margin-bottom: 0px;
+  margin-top: 30px;
 
   color: #e28181;
 `;
 const RemoveItem = styled.button`
+  margin-top: 20px;
   border: none;
   cursor: pointer;
 `;
