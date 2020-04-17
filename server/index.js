@@ -122,7 +122,9 @@ express()
 
   .post("/order", (req, res) => {
     const { order_summary } = req.body;
-
+    if (!order_summary.length) {
+      return res.status(400).send({ message: "Failure" });
+    }
     const isOrderSuccessful = _.flatten(order_summary).map((item) => {
       if (!item.item_id || !item.quantity) {
         return false;
