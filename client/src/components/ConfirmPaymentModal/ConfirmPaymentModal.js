@@ -123,6 +123,7 @@ const BadSnack = styled.div`
   align-items: center;
   background-color: grey;
   border-radius: 20px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
 `;
 
 const No = styled.h1`
