@@ -19,4 +19,5 @@ const DragonIcon = () => {
 const ImageContainer = styled.div`
   background-color: #ffffff;
 `;
+
 export default DragonIcon;

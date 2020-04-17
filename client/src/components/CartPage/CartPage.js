@@ -82,6 +82,12 @@ const Wrapper = styled.section`
   color: white;
   padding-top: 16px;
   padding-bottom: 16px;
+  border-style: solid;
+  border-color: #e6e6e6;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-width: thin;
+  box-shadow: 0px 0px 5px 5px #67636326;
 `;
 const Description = styled.div`
   display: flex;
