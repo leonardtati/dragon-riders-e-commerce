@@ -1,7 +1,7 @@
 const companyData = require("./data/companies.json");
 
-const MAX_DELAY = 2000;
-const FAILURE_ODDS = 0;
+const MAX_DELAY = 1000;
+const FAILURE_ODDS = 0.05;
 
 const simulateProblems = (res, data) => {
   const delay = Math.random() * MAX_DELAY;
