@@ -9,12 +9,14 @@ const SnackBar = () => {
 };
 
 const Wrapper = styled.div`
-  height: 100px;
-  width: 500px;
+  position: absolute;
+  height: 650px;
+  width: 1150px
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: green;
+  border-radius: 20px;
 `;
 
 const Message = styled.div`
