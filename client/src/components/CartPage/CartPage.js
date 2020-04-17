@@ -20,7 +20,6 @@ const Cart = () => {
   });
 
   const [open, setOpen] = useState(false);
-  console.log('open', open);
   return (
     <Wrapper>
       <Top>
@@ -33,7 +32,6 @@ const Cart = () => {
         </Description>
 
         {cartStateArray.map((item) => {
-
           return (
             <Subtitle>
               <Qty
@@ -59,12 +57,21 @@ const Cart = () => {
         <Total>
           Total: <strong>{formatPriceForHumans(subtotal)}</strong>
         </Total>
-        <button style={{ width: 140 }} onClick={() => setOpen(true)}> Proceed to checkout</button>
+        <button style={{ width: 140 }} onClick={() => setOpen(true)}>
+          {" "}
+          Proceed to checkout
+        </button>
       </Bottom>
-      {open ? <ConfirmPaymentModal open={open} cartStateArray={cartStateArray} price={formatPriceForHumans(subtotal)} /> : <></>}
-
+      {open ? (
+        <ConfirmPaymentModal
+          open={open}
+          cartStateArray={cartStateArray}
+          price={formatPriceForHumans(subtotal)}
+        />
+      ) : (
+        <></>
+      )}
     </Wrapper>
-
   );
 };
 

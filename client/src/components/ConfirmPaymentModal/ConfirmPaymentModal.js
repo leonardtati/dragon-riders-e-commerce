@@ -1,73 +1,120 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-// import PersonIcon from '@material-ui/icons/Person';
-// import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
-
-// body: JSON.stringify({ order_summary: order }),
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import { DialogContent, DialogContentText } from "@material-ui/core";
+import SnackBar from "../SnackBar/SnackBar";
+import styled from "styled-components";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 function ConfirmPaymentModal(props) {
-    const order = props.cartStateArray.map((item) => {
-        return { 'item_id': item.id, quantity: item.quantity }
+  const order = props.cartStateArray.map((item) => {
+    return { item_id: item.id, quantity: item.quantity };
+  });
+  const [test, setTest] = useState(true);
+  const [message, setMessage] = useState("");
+  console.log("props", props);
+  const { open } = props;
+
+  const handleClickOpen = () => {
+    setTest(true);
+  };
+
+  const handleClose = () => {
+    setTest(false);
+  };
+
+  //   const priceTotal = props.cartStateArray.map((item) => {
+  //     return item.price;
+  //   });
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+
+    fetch("/order", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        order_summary: order,
+      }),
     })
-
-
-    console.log('order', order);
-    console.log('props', props);
-    // const classes = useStyles();
-    const { open } = props;
-
-    const handleSubmit = ev => {
-        ev.preventDefault();
-
-        fetch("/order", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                order_summary: order
-            })
-        })
-            .then(res => res.json())
-            .then(json => {
-                console.log('json', json);
-            })
-            .catch(err => {
-                console.log('message', err.message);
-            });
-    }
-    return (
-
-        <Dialog aria-labelledby="simple-dialog-title" open={open}>
-            <form
-                onSubmit={ev => {
-                    handleSubmit(ev)
-
-                }}
-
-            >
-                <input
-                    variant="outlined"
-                    label="Credit card"
-                    type="submit"
-                    value="CONFIRM"
-                    // onChange={ev => setCreditCard(ev.currentTarget.value)}
-                    style={{ flex: 2 }}
-                /></form>
-        </Dialog>
-    );
+      .then((res) => res.json())
+      .then((json) => {
+        setMessage(json.message);
+        console.log("json", json);
+      })
+      .catch((err) => {
+        console.log("message", err.message);
+      });
+  };
+  console.log(message);
+  return (
+    <>
+      <Dialog
+        aria-labelledby="simple-dialog-title"
+        open={test}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Button onClick={() => handleClose(false)}>
+          {" "}
+          Close Order.. For Now..
+        </Button>
+        <form
+          onSubmit={(ev) => {
+            handleSubmit(ev);
+            setTest(false);
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirm Payment?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {`Thank You For Shoppoing With Dragon Riders ${props.price}`}
+            </DialogContentText>
+          </DialogContent>
+          <input
+            variant="outlined"
+            label="Credit card"
+            type="submit"
+            value="CONFIRM"
+            // onChange={ev => setCreditCard(ev.currentTarget.value)}
+            style={{ flex: 2 }}
+          />
+        </form>
+      </Dialog>
+      <Wrapper>
+        {message === "Successful Purchase!" ? (
+          <SnackBar />
+        ) : message === "Failure" ? (
+          <No>NAHHHH</No>
+        ) : (
+          <></>
+        )}
+      </Wrapper>
+    </>
+  );
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const No = styled.h1`
+  color: black;
+  font-size: 3em;
+`;
 
 export default ConfirmPaymentModal;
