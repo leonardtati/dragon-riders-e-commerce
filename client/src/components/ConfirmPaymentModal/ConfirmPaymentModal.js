@@ -80,10 +80,10 @@ function ConfirmPaymentModal(props) {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {`Thank You For Shoppoing With Dragon Riders ${props.price}`}
+              {`Thank You For Shoppoing With Dragon Riders. Your total price: ${props.price}`}
             </DialogContentText>
           </DialogContent>
-          <input
+          <Test
             variant="outlined"
             label="Credit card"
             type="submit"
@@ -97,7 +97,9 @@ function ConfirmPaymentModal(props) {
         {message === "Successful Purchase!" ? (
           <SnackBar />
         ) : message === "Failure" ? (
-          <No>NAHHHH</No>
+          <BadSnack>
+            <No>NAHHHH</No>
+          </BadSnack>
         ) : (
           <></>
         )}
@@ -112,9 +114,24 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const No = styled.h1`
-  color: black;
-  font-size: 3em;
+const BadSnack = styled.div`
+  position: absolute;
+  height: 650px;
+  width: 1150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
 `;
 
+const No = styled.h1`
+  color: black;
+  font-size: 5em;
+`;
+
+const Test = styled.input`
+  margin: 50px 242px;
+`;
 export default ConfirmPaymentModal;
